@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-graphik)'],
+        sans: ['var(--font-poppins)'],
       },
       typography: {
         quoteless: {

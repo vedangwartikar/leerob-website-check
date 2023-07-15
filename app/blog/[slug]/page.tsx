@@ -2,14 +2,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Mdx } from 'app/components/mdx';
 import { allBlogs } from 'contentlayer/generated';
-import { getTweets } from 'lib/twitter';
 import Balancer from 'react-wrap-balancer';
 import ViewCounter from '../view-counter';
 import { getViewsCount } from 'lib/metrics';
 
 export async function generateMetadata({
   params,
-}): Promise<Metadata | undefined> {
+}: {params: {slug: string} }): Promise<Metadata | undefined> {
   const post = allBlogs.find((post) => post.slug === params.slug);
   if (!post) {
     return;
@@ -79,16 +78,15 @@ function formatDate(date: string) {
   return `${fullDate} (${formattedDate})`;
 }
 
-export default async function Blog({ params }) {
+export default async function Blog({ params }: {params: {slug: string}}) {
   const post = allBlogs.find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();
   }
 
-  const [allViews, tweets] = await Promise.all([
+  const [allViews,] = await Promise.all([
     getViewsCount(),
-    getTweets(post.tweetIds),
   ]);
 
   return (
@@ -105,7 +103,7 @@ export default async function Blog({ params }) {
         </p>
         <ViewCounter allViews={allViews} slug={post.slug} trackView />
       </div>
-      <Mdx code={post.body.code} tweets={tweets} />
+      <Mdx code={post.body.code}  />
     </section>
   );
 }
