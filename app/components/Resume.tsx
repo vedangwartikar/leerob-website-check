@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import smashing from "public/images/home/smashing.jpg";
 import summit from "public/images/home/summit.jpg";
 import reactathon from "public/images/home/reactathon.jpg";
@@ -10,6 +10,10 @@ import { PropsWithChildren, Suspense } from "react";
 import { allBlogs } from "contentlayer/generated";
 import { allBlogsSorted } from "lib/utils";
 import { ArrowDownIcon, BriefcaseIcon } from "./icons";
+import XealthLogo from "public/images/main-page/logo-xealth.jpg";
+import StateFarm from "public/images/main-page/logo-state-farm.png";
+import CocaCola from "public/images/main-page/logo-coca-cola.png";
+import Emory from "public/images/main-page/logo-emory.png";
 import { Button } from "./Button";
 
 export function Resume() {
@@ -17,7 +21,7 @@ export function Resume() {
     {
       company: "Xealth Inc.",
       title: "Software Engineer Technical Lead",
-      logo: "undefined",
+      logo: XealthLogo,
       start: "2021",
       end: {
         label: "Present",
@@ -27,28 +31,28 @@ export function Resume() {
     {
       company: "State Farm",
       title: "Data Engineer/Software Engineer",
-      logo: "undefined",
+      logo: StateFarm,
       start: "2020",
       end: "2021",
     },
     {
       company: "Coca-Cola One North America",
       title: "Data Engineer",
-      logo: "undefined",
+      logo: CocaCola,
       start: "2019",
       end: "2020",
     },
     {
       company: "Emory University",
       title: "Bachelor of Arts in Economics & Econometrics",
-      logo: "undefined",
+      logo: Emory,
       start: "2015",
       end: "2019",
     },
   ] as {
     company: string;
     title: string;
-    logo: string;
+    logo: StaticImageData;
     start: string | { label: string; dateTime: number };
     end: string | { label: string; dateTime: number };
   }[];
