@@ -20,10 +20,10 @@ This is a basic `.xml` file defining the content of your site. Here's a simple e
 ```xml
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-      <loc>https://leerob.io</loc>
+      <loc>https://michaelangelo.io</loc>
   </url>
   <url>
-      <loc>https://leerob.io/blog</loc>
+      <loc>https://michaelangelo.io/blog</loc>
   </url>
 </urlset>
 ```
@@ -41,7 +41,7 @@ First, let's add `globby` so we can fetch a list of routes.
 $ yarn add --dev globby
 ```
 
-> **Note:** `globby` [might not work](https://github.com/leerob/leerob.io/issues/293) on Windows.
+> **Note:** `globby` [might not work](https://github.com/leerob/michaelangelo.io/issues/293) on Windows.
 
 Next, we can create a Node script at `scripts/generate-sitemap.mjs`.
 This file will dynamically build a sitemap based on your `/pages` directory.
@@ -76,7 +76,7 @@ async function generate() {
 
             return `
               <url>
-                  <loc>${`https://leerob.io${route}`}</loc>
+                  <loc>${`https://michaelangelo.io${route}`}</loc>
               </url>
             `;
           })
@@ -192,5 +192,5 @@ files can be crawled and where the sitemap is located.
 
 ```bash
 User-agent: *
-Sitemap: https://leerob.io/sitemap.xml
+Sitemap: https://michaelangelo.io/sitemap.xml
 ```

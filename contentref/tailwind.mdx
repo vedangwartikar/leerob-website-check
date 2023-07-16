@@ -27,7 +27,7 @@ Preventing CLS required a mental model shift. Previously, my images used normal 
 
 I wanted to avoid using the `height` and `width` props of `next/image`, if possible. The `Image` component exposes different [layout props](https://nextjs.org/docs/api-reference/next/image#layout) like `layout=fill`, which led to me believe I could [escape defining sizes](https://github.com/vercel/next.js/blob/canary/examples/image-component/pages/layout-fill.js). In reality, there's no way to avoid layout shift unless you explicitly tell the layout how much space to allocate. Once that clicked in my head, the `Image` component made sense.
 
-This meant switching from Markdown image syntax (shown above) to using `next/image` via MDX. Since I had hundreds of Markdown files, I wanted to automate this. I created a [Node script using remark](https://github.com/leerob/leerob.io/blob/fb9c02b76128d91717a226e5c118b5c56e11696e/scripts/markdown-to-next-image.js) that transformed every image and read the dimensions from the file system. For example, the above Markdown image was transformed to:
+This meant switching from Markdown image syntax (shown above) to using `next/image` via MDX. Since I had hundreds of Markdown files, I wanted to automate this. I created a [Node script using remark](https://github.com/leerob/michaelangelo.io/blob/fb9c02b76128d91717a226e5c118b5c56e11696e/scripts/markdown-to-next-image.js) that transformed every image and read the dimensions from the file system. For example, the above Markdown image was transformed to:
 
 ```jsx
 <Image alt="Siamese Cat" src="/cat.png" height={50} width={50} />
@@ -75,7 +75,7 @@ Tailwind 2.0 makes using dark mode painless. Enable the `dark` [variant](https:/
 <div class="bg-white dark:bg-gray-800" />
 ```
 
-I was able to keep a [dark mode toggle](https://github.com/leerob/leerob.io/blob/91233631f0e1a193295ffc54d2291f3109060007/components/Container.tsx) in the navigation thanks to [next-themes](https://github.com/pacocoursey/next-themes). Tailwind and `next-themes` [pair well](https://github.com/pacocoursey/next-themes#with-tailwind) together.
+I was able to keep a [dark mode toggle](https://github.com/leerob/michaelangelo.io/blob/91233631f0e1a193295ffc54d2291f3109060007/components/Container.tsx) in the navigation thanks to [next-themes](https://github.com/pacocoursey/next-themes). Tailwind and `next-themes` [pair well](https://github.com/pacocoursey/next-themes#with-tailwind) together.
 
 ```jsx
 import { useTheme } from 'next-themes';
@@ -95,7 +95,7 @@ const ThemeChanger = () => {
 
 I hit a few issues along the way adding dark mode to Tailwind Typography. The documentation felt a bit disjointed from the rest of Tailwind. I would have expected more guidance on pairing the two together.
 
-After digging through GitHub Issues, I was able to [get things working](https://github.com/leerob/leerob.io/blob/91233631f0e1a193295ffc54d2291f3109060007/tailwind.config.js). It wasn't obvious I needed `dark:prose-dark`. I also managed to get [syntax highlighting](https://github.com/leerob/leerob.io/blob/91233631f0e1a193295ffc54d2291f3109060007/styles/global.css) working through some custom styles.
+After digging through GitHub Issues, I was able to [get things working](https://github.com/leerob/michaelangelo.io/blob/91233631f0e1a193295ffc54d2291f3109060007/tailwind.config.js). It wasn't obvious I needed `dark:prose-dark`. I also managed to get [syntax highlighting](https://github.com/leerob/michaelangelo.io/blob/91233631f0e1a193295ffc54d2291f3109060007/styles/global.css) working through some custom styles.
 
 ## Performance
 

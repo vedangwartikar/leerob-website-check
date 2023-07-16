@@ -13,17 +13,17 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://leerob.io'),
+  metadataBase: new URL('https://michaelangelo.io'),
   title: {
-    default: 'Lee Robinson',
-    template: '%s | Lee Robinson',
+    default: 'Michael Angelo Rivera',
+    template: '%s | Michael Angelo Rivera',
   },
   description: 'Developer, writer, and creator.',
   openGraph: {
-    title: 'Lee Robinson',
+    title: 'Michael Angelo Rivera',
     description: 'Developer, writer, and creator.',
-    url: 'https://leerob.io',
-    siteName: 'Lee Robinson',
+    url: 'https://michaelangelo.io',
+    siteName: 'Michael Angelo Rivera',
     locale: 'en-US',
     type: 'website',
   },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: 'Lee Robinson',
+    title: 'Michael Angelo Rivera',
     card: 'summary_large_image',
   },
   verification: {

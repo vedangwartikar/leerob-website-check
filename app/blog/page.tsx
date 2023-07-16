@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { allBlogs } from 'contentlayer/generated';
 import ViewCounter from './view-counter';
 import { getViewsCount } from 'lib/metrics';
+import { allBlogsSorted } from 'lib/utils';
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -15,13 +16,7 @@ export default async function BlogPage() {
   return (
     <section>
       <h1 className="font-bold text-2xl mb-8 tracking-tighter">thoughts, lessons, and rants</h1>
-      {allBlogs
-        .sort((a, b) => {
-          if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-            return -1;
-          }
-          return 1;
-        })
+      {allBlogsSorted()
         .map((post) => (
           <Link
             key={post.slug}

@@ -29,12 +29,12 @@ const computedFields = {
       dateModified: doc.lastEditedAt,
       description: doc.summary,
       image: doc.image
-        ? `https://leerob.io${doc.image}`
-        : `https://leerob.io/og?title=${doc.title}`,
-      url: `https://leerob.io/blog/${doc._raw.flattenedPath}`,
+        ? `https://michaelangelo.io${doc.image}`
+        : `https://michaelangelo.io/og?title=${doc.title}`,
+      url: `https://michaelangelo.io/blog/${doc._raw.flattenedPath}`,
       author: {
         '@type': 'Person',
-        name: 'Lee Robinson',
+        name: 'Michael Angelo Rivera',
       },
     }),
   },
