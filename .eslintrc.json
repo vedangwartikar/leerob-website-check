@@ -1,0 +1,140 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "**/*"
+  ],
+  "plugins": [
+    "@nx"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "error",
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "max-len": [
+          "error",
+          {
+            "tabWidth": 2,
+            "code": 120
+          }
+        ],
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
+              }
+            ]
+          }
+        ],
+        "semi": [
+          "error",
+          "never"
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@nx/typescript"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "error",
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "max-len": [
+          "error",
+          {
+            "tabWidth": 2,
+            "code": 120
+          }
+        ],
+        "semi": [
+          "error",
+          "never"
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.tsx"
+      ],
+      "extends": [
+        "plugin:@nx/typescript"
+      ],
+      "rules": {
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "semi": [
+          "error",
+          "never"
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.js"
+      ],
+      "extends": [
+        "plugin:@nx/javascript"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "error",
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "max-len": [
+          "error",
+          {
+            "tabWidth": 2,
+            "code": 120
+          }
+        ],
+        "semi": [
+          "error",
+          "never"
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.jsx"
+      ],
+      "extends": [
+        "plugin:@nx/javascript"
+      ],
+      "rules": {
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "semi": [
+          "error",
+          "never"
+        ]
+      }
+    }
+  ]
+}
