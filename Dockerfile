@@ -35,12 +35,12 @@ COPY --from=code /usr/src/app/node_modules ./node_modules
 
 # Copy built application files
 # RUN ls -la
-COPY server.js  ./
+COPY server.js next.config.js ./
 
 COPY .next ./.next
 
 # Run the application under "node" user by default
-# RUN chown -R node:node .
+RUN chown -R node:node .
 USER node
 EXPOSE 3000
 # CMD ["ls", "-la"]
