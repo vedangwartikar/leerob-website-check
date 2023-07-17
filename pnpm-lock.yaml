@@ -20,9 +20,6 @@ dependencies:
   contentlayer:
     specifier: ^0.3.3
     version: 0.3.3(esbuild@0.17.19)
-  date-fns:
-    specifier: ^2.30.0
-    version: 2.30.0
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -77,9 +74,6 @@ dependencies:
   sharp:
     specifier: ^0.32.3
     version: 0.32.3
-  shiki:
-    specifier: ^0.14.3
-    version: 0.14.3
   swr:
     specifier: ^2.2.0
     version: 2.2.0(react@18.2.0)

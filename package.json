@@ -12,7 +12,6 @@
     "@vercel/og": "^0.5.8",
     "clsx": "^1.2.1",
     "contentlayer": "^0.3.3",
-    "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "framer-motion": "^10.12.17",
     "kysely": "^0.25.0",
@@ -31,7 +30,6 @@
     "remark-gfm": "^3.0.1",
     "server-only": "^0.0.1",
     "sharp": "^0.32.3",
-    "shiki": "^0.14.3",
     "swr": "^2.2.0"
   },
   "devDependencies": {
