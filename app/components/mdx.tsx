@@ -1,13 +1,11 @@
-import * as React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useMDXComponent } from 'next-contentlayer/hooks';
-import Tweet from './tweet';
+import { useMDXComponent } from "next-contentlayer/hooks";
+import Image from "next/image";
+import Link from "next/link";
 
-const CustomLink = (props: any ) => {
+const CustomLink = (props: any) => {
   const href = props.href;
 
-  if (href.startsWith('/')) {
+  if (href.startsWith("/")) {
     return (
       <Link href={href} {...props}>
         {props.children}
@@ -15,7 +13,7 @@ const CustomLink = (props: any ) => {
     );
   }
 
-  if (href.startsWith('#')) {
+  if (href.startsWith("#")) {
     return <a {...props} />;
   }
 
@@ -35,7 +33,7 @@ function Callout(props: any) {
   );
 }
 
-function ProsCard({ title, pros }: {title: string; pros: string[]}) {
+function ProsCard({ title, pros }: { title: string; pros: string[] }) {
   return (
     <div className="border border-emerald-200 dark:border-emerald-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-4 w-full">
       <span>{`You might use ${title} if...`}</span>
@@ -64,7 +62,7 @@ function ProsCard({ title, pros }: {title: string; pros: string[]}) {
   );
 }
 
-function ConsCard({ title, cons }: {title: string; cons: string[]}) {
+function ConsCard({ title, cons }: { title: string; cons: string[] }) {
   return (
     <div className="border border-red-200 dark:border-red-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-6 w-full">
       <span>{`You might not use ${title} if...`}</span>

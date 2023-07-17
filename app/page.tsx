@@ -1,20 +1,11 @@
-import Image from "next/image";
-import smashing from "public/images/home/smashing.jpg";
-import summit from "public/images/home/summit.jpg";
-import reactathon from "public/images/home/reactathon.jpg";
-import ship from "public/images/home/ship.jpg";
-import filming from "public/images/home/filming.jpg";
-import meetups from "public/images/home/meetups.jpg";
-import ViewCounter from "app/blog/view-counter";
-import { PropsWithChildren, Suspense } from "react";
-import { allBlogs } from "contentlayer/generated";
 import { allBlogsSorted } from "lib/utils";
-import { ArrowDownIcon, BriefcaseIcon } from "./components/icons";
-import { Button } from "./components/Button";
-import { Resume } from "./components/Resume";
-import { Photos } from "./components/Photos";
-import { Article } from "./components/Article";
+import Link from "next/link";
 import ActivityStreakLogo from "public/images/main-page/activitystreaklogo.svg";
+import { PropsWithChildren, Suspense } from "react";
+import { Article } from "./components/Article";
+import { Header } from "./components/Avatar";
+import { Photos } from "./components/Photos";
+import { Resume } from "./components/Resume";
 import {
   GitHubIcon,
   InstagramIcon,
@@ -22,8 +13,6 @@ import {
   SocialLink,
   TwitterIcon,
 } from "./components/Social";
-import Link from "next/link";
-import { Header } from "./components/Avatar";
 
 function Badge(props: PropsWithChildren & { href: string }) {
   return (
@@ -83,10 +72,10 @@ export default async function Page() {
       <>
         <section>
           <div className="flex flex-col lg:flex-row lg:p-3 lg:-mt-10">
-          <Header></Header>
-          <h1 className="font-bold text-2xl mb-8 tracking-tighter mt-4 lg:ml-5">
-            👋 heyo, I'm Michael Angelo
-          </h1>
+            <Header></Header>
+            <h1 className="font-bold text-2xl mb-8 tracking-tighter mt-4 lg:ml-5">
+              👋 heyo, I'm Michael Angelo
+            </h1>
           </div>
           <p className="font-bold text-xl mb-8 tracking-tighter">
             yes, like the ninja turtle
@@ -338,8 +327,8 @@ export default async function Page() {
           </div>
           <div className="prose prose-neutral dark:prose-invert">
             <p>
-              I'd like to use this site to share my experiences, dumb
-              mistakes, learnings, and maybe some memes. I hope you enjoy!
+              I'd like to use this site to share my experiences, dumb mistakes,
+              learnings, and maybe some memes. I hope you enjoy!
             </p>
           </div>
           <div className="my-8 flex flex-col space-y-4 w-full">
@@ -389,15 +378,15 @@ export default async function Page() {
               out if you want.
             </p>
           </div>
-          <div className="my-8 flex flex-row space-x-2 w-full h-14 overflow-x-auto">
-            <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center justify-between px-3 py-4">
+          <div className="my-8 flex flex-col  w-full  md:flex-row items-center space-y-1 space-x-1">
+            <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
               <Link href={"https://activitystreak.app"}>
                 {" "}
                 <ActivityStreakLogo className="w-15 h-10" alt="Site Title" />
               </Link>
             </div>
 
-            <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center justify-between px-3 py-4">
+            <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
               <svg
                 width="50"
                 height="40"
@@ -405,7 +394,7 @@ export default async function Page() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clip-path="url(#clip0_13_20)">
+                <g clipPath="url(#clip0_13_20)">
                   <rect width="116" height="116" rx="26" fill="#9333EA" />
                   <path
                     d="M62.487 59.9566L95.1166 60.1262L95.1493 53.8212L62.5198 53.6517L62.487 59.9566ZM62.5863 40.8469L95.2159 41.0164L95.2493 34.5815L62.6197 34.412L62.5863 40.8469ZM62.4168 73.4765L95.0463 73.646L95.0129 80.0809L62.3833 79.9114L62.4168 73.4765Z"
@@ -422,10 +411,7 @@ export default async function Page() {
                   </clipPath>
                 </defs>
               </svg>
-              <Link
-                href={"https://ts-rest.com/"}
-                className="font-bold text-sm"
-              >
+              <Link href={"https://ts-rest.com/"} className="font-bold text-sm">
                 {" "}
                 Ts-Rest Core Team
               </Link>
@@ -445,10 +431,17 @@ export default async function Page() {
           </div>
         </section>
         <Resume />
-        
+
         <div className="text-xs text-center mt-10">
           <div>Copyright © Michael Angelo Rivera, 2023</div>
-         <div > Thank you <Link href={'https://leerob.io/'} className="font-bold">Lee Rob</Link> for the inspiration!</div>
+          <div>
+            {" "}
+            Thank you{" "}
+            <Link href={"https://leerob.io/"} className="font-bold">
+              Lee Rob
+            </Link>{" "}
+            for the inspiration!
+          </div>
         </div>
       </>
     </>

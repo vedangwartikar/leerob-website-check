@@ -1,11 +1,9 @@
-'use client'
+"use client";
 import clsx from "clsx";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { forwardRef, useEffect, useRef } from "react";
-import avatarImage from "public/images/main-page/avatar.png";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { forwardRef, useEffect, useRef } from "react";
 
 const OuterContainer = forwardRef(function OuterContainer(
   { className, children, ...props }: any,
@@ -71,7 +69,11 @@ function Avatar({ large = false, className, ...props }: any) {
       {...props}
     >
       <Image
-        src={avatarImage}
+        src={
+          "https://media.michaelangrivera.com/michaelangrivera/images/main-page/avatar.png"
+        }
+        width={9}
+        height={9}
         alt=""
         sizes={large ? "4rem" : "2.25rem"}
         className={clsx(
@@ -104,7 +106,9 @@ export function Header() {
     }
 
     function updateHeaderStyles() {
-      let { top, height } = headerRef.current ? headerRef.current.getBoundingClientRect() : { top: 0, height: 0 };
+      let { top, height } = headerRef.current
+        ? headerRef.current.getBoundingClientRect()
+        : { top: 0, height: 0 };
       let scrollY = clamp(
         window.scrollY,
         0,
@@ -190,26 +194,21 @@ export function Header() {
     <>
       {isHomePage && (
         <>
+          <div ref={avatarRef} className=" -mt-10 " />
+
           <div
-            ref={avatarRef}
-            className=" -mt-10 "
-          />
-
-            <div
-              className=" "
-              //@ts-ignore
-              style={{ position: "" }}
-            >
-              <div className="">
-      
-                <Avatar
-                  large
-                  className="block h-16 w-16 origin-left"
-                  style={{ transform: "var(--avatar-image-transform)" }}
-                />
-              </div>
+            className=" "
+            //@ts-ignore
+            style={{ position: "" }}
+          >
+            <div className="">
+              <Avatar
+                large
+                className="block h-16 w-16 origin-left"
+                style={{ transform: "var(--avatar-image-transform)" }}
+              />
             </div>
-
+          </div>
         </>
       )}
     </>

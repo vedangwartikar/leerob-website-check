@@ -2,10 +2,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run setup && next build",
-    "build-only": "next build",
+    "build": "next build",
     "start": "next start",
-    "setup": "node ./lib/setup.mjs"
+    "build-server": "tsc --project tsconfig.server.json"
   },
   "dependencies": {
     "@planetscale/database": "^1.7.0",
@@ -21,6 +20,7 @@
     "next": "13.4.10",
     "next-auth": "0.0.0-manual.83c4ebd1",
     "next-contentlayer": "^0.3.3",
+    "pino": "^8.14.1",
     "popmotion": "^11.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -30,6 +30,7 @@
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
     "server-only": "^0.0.1",
+    "sharp": "^0.32.3",
     "shiki": "^0.14.3",
     "swr": "^2.2.0"
   },

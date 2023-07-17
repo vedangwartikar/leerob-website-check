@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
-import { auth } from 'lib/auth';
-import { queryBuilder } from 'lib/planetscale';
-import { SignIn, SignOut } from './buttons';
-import Form from './form';
+import { auth } from "lib/auth";
+import { queryBuilder } from "lib/planetscale";
+import type { Metadata } from "next";
+import { SignIn, SignOut } from "./buttons";
+import Form from "./form";
 
 async function getGuestbook() {
   const data = await queryBuilder
-    .selectFrom('guestbook')
-    .select(['id', 'body', 'created_by', 'updated_at'])
-    .orderBy('updated_at', 'desc')
+    .selectFrom("guestbook")
+    .select(["id", "body", "created_by", "updated_at"])
+    .orderBy("updated_at", "desc")
     .limit(100)
     .execute();
 
@@ -16,12 +16,12 @@ async function getGuestbook() {
 }
 
 export const metadata: Metadata = {
-  title: 'Guestbook',
-  description: 'Sign my guestbook and leave your mark.',
+  title: "Guestbook",
+  description: "Sign my guestbook and leave your mark.",
 };
 
-export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
+export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export default async function GuestbookPage() {
   let entries;
@@ -33,13 +33,13 @@ export default async function GuestbookPage() {
       auth(),
     ]);
 
-    if (guestbookRes.status === 'fulfilled' && guestbookRes.value[0]) {
+    if (guestbookRes.status === "fulfilled" && guestbookRes.value[0]) {
       entries = guestbookRes.value;
     } else {
       console.error(guestbookRes);
     }
 
-    if (sessionRes.status === 'fulfilled') {
+    if (sessionRes.status === "fulfilled") {
       session = sessionRes.value;
     } else {
       console.error(sessionRes);
@@ -61,7 +61,7 @@ export default async function GuestbookPage() {
       ) : (
         <SignIn />
       )}
-      {entries.map((entry) => (
+      {/* {entries.map((entry) => (
         <div key={entry.id} className="flex flex-col space-y-1 mb-4">
           <div className="w-full text-sm break-words">
             <span className="text-neutral-600 dark:text-neutral-400 mr-1">
@@ -70,7 +70,7 @@ export default async function GuestbookPage() {
             {entry.body}
           </div>
         </div>
-      ))}
+      ))} */}
     </section>
   );
 }
