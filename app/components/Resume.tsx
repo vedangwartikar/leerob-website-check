@@ -1,23 +1,13 @@
 import Image, { StaticImageData } from 'next/image'
-import smashing from 'public/images/home/smashing.jpg'
-import summit from 'public/images/home/summit.jpg'
-import reactathon from 'public/images/home/reactathon.jpg'
-import ship from 'public/images/home/ship.jpg'
-import filming from 'public/images/home/filming.jpg'
-import meetups from 'public/images/home/meetups.jpg'
-import ViewCounter from 'app/blog/view-counter'
-import { PropsWithChildren, Suspense } from 'react'
-import { allBlogs } from 'contentlayer/generated'
-import { allBlogsSorted } from 'lib/utils'
-import { ArrowDownIcon, BriefcaseIcon } from './icons'
-import XealthLogo from 'public/images/main-page/logo-xealth.jpg'
-import StateFarm from 'public/images/main-page/logo-state-farm.png'
 import CocaCola from 'public/images/main-page/logo-coca-cola.png'
 import Emory from 'public/images/main-page/logo-emory.png'
+import StateFarm from 'public/images/main-page/logo-state-farm.png'
+import XealthLogo from 'public/images/main-page/logo-xealth.jpg'
 import { Button } from './Button'
+import { ArrowDownIcon, BriefcaseIcon } from './icons'
 
 export function Resume() {
-  let resume = [
+  const resume = [
     {
       company: 'Xealth Inc.',
       title: 'Software Engineer Technical Lead',

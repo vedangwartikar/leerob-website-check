@@ -1,6 +1,6 @@
 import { Mdx } from 'app/components/mdx'
 import { allBlogs } from 'contentlayer/generated'
-import { getViewsCount } from 'lib/metrics'
+import { getViewsForRoute } from 'lib/metrics'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Balancer from 'react-wrap-balancer'
@@ -75,7 +75,7 @@ export default async function Blog({ params }: { params: { slug: string } }) {
     notFound()
   }
 
-  const [allViews] = await Promise.all([getViewsCount()])
+  const viewsCount = await getViewsForRoute(`/blog/${post.slug}`)
 
   return (
     <section>
@@ -87,7 +87,7 @@ export default async function Blog({ params }: { params: { slug: string } }) {
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">{formatDate(post.publishedAt)}</p>
-        <ViewCounter allViews={allViews} slug={post.slug} trackView />
+        <ViewCounter count={viewsCount} route={`/blog/${post.slug}`} trackView />
       </div>
       <Mdx code={post.body.code} />
     </section>

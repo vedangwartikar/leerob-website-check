@@ -1,6 +1,7 @@
 import { AdapterAccount } from '@auth/core/adapters'
 import {
   bigserial,
+  boolean,
   index,
   integer,
   pgSchema,
@@ -22,6 +23,7 @@ export const auth_users = schema.table(
     email: text('email').notNull(),
     emailVerified: timestamp('emailVerified', { mode: 'date' }),
     image: text('image'),
+    is_subscribed: boolean('is_subscribed').notNull().default(true),
   },
   (table) => {
     return {
@@ -90,24 +92,58 @@ export const verificationTokens = schema.table(
   }),
 )
 
-export const views = schema.table('views', {
-  id: bigserial('id', { mode: 'bigint' }).notNull().primaryKey(),
-  name: varchar('name').notNull(),
-  query: text('query').notNull(),
-  description: text('description'),
-})
+export const views = schema.table(
+  'views',
+  {
+    id: bigserial('id', { mode: 'bigint' }).notNull().primaryKey(),
+    email: text('email'),
+    route: varchar('route'),
+    geo_ip_country: varchar('geo_ip_country'),
+    geo_ip_region: varchar('geo_ip_region'),
+    geo_ip_city: varchar('geo_ip_city'),
+    geo_ip_latitude: varchar('geo_ip_latitude'),
+    geo_ip_longitude: varchar('geo_ip_longitude'),
+    view_date: timestamp('view_date').notNull().defaultNow(),
+  },
+  (views) => {
+    return {
+      id_idx: index('id_idx').on(views.id),
+      email_idx: index('email_idx').on(views.email),
+      route_idx: index('route_idx').on(views.route),
+      view_date_idx: index('view_date_idx').on(views.view_date).desc(),
+      geo_ip_country_idx: index('geo_ip_country_idx').on(views.geo_ip_country),
+      geo_ip_region_idx: index('geo_ip_region_idx').on(views.geo_ip_region),
+      geo_ip_city_idx: index('geo_ip_city_idx').on(views.geo_ip_city),
+      geo_ip_latitude_idx: index('geo_ip_latitude_idx').on(views.geo_ip_latitude),
+      geo_ip_longitude_idx: index('geo_ip_longitude_idx').on(views.geo_ip_longitude),
+    }
+  },
+)
 
-export const comments = schema.table('comments', {
-  id: bigserial('id', { mode: 'bigint' }).notNull().primaryKey(),
-  comment: varchar('comment', {
-    length: 2000,
-  }).notNull(),
-  comment_date: timestamp('comment_date', { mode: 'date' }).notNull().defaultNow(),
-})
+export const comments = schema.table(
+  'comments',
+  {
+    id: bigserial('id', { mode: 'bigint' }).notNull().primaryKey(),
+    email: text('email'),
+    comment: varchar('comment', {
+      length: 2000,
+    }).notNull(),
+    comment_date: timestamp('comment_date', { mode: 'date' }).notNull().defaultNow(),
+  },
+  (route) => {
+    return {
+      id_idx: index('id_idx').on(route.id),
+      email_idx: index('email_idx').on(route.email),
+      comment_date_idx: index('comment_date_idx').on(route.comment_date).desc(),
+    }
+  },
+)
 
-export const auth_tbs = {
+export const tbs = {
   auth_users,
   accounts,
   sessions,
   verificationTokens,
+  views,
+  comments,
 }

@@ -4,7 +4,12 @@
     "module": "commonjs",
     "noEmit": false,
     "incremental": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ],
+    "outDir": "./dist/server"
   },
-  "include": ["server.ts"]
+  "include": [
+    "server.ts"
+  ]
 }

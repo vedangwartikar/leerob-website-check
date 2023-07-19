@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Link from 'next/link'
 
 export function SocialLink({ icon: Icon, ...props }: any) {

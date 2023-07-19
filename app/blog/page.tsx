@@ -1,6 +1,6 @@
 import { Article } from 'app/components/Article'
-import { getViewsCount } from 'lib/metrics'
-import { allBlogsSorted, getViewsForSlug } from 'lib/utils'
+import { getViewsForRoute } from 'lib/metrics'
+import { allBlogsSorted } from 'lib/utils'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogPage() {
-  const allViews = await getViewsCount()
-
+  const sortedBlogs = allBlogsSorted()
+  const allViews = await Promise.all([...sortedBlogs.map((post) => getViewsForRoute(`/blog/${post.slug}`))])
   return (
     <section>
       <h1 className="font-bold text-2xl mb-8 tracking-tighter">thoughts, lessons, and rants</h1>
@@ -22,7 +22,7 @@ export default async function BlogPage() {
             description: post.summary,
             slug: post.slug,
             title: post.title,
-            views: getViewsForSlug(allViews, post.slug),
+            views: allViews[i],
           }}
         />
       ))}

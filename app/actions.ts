@@ -1,39 +1,37 @@
 'use server'
-
-import { auth } from 'lib/auth'
-import { type Session } from 'next-auth'
-import { queryBuilder } from 'lib/planetscale'
+import { db } from 'lib/db'
+import { getGeoIp } from 'lib/geo'
+import { getCorrelationId, getLogger } from 'lib/logger'
+import { tbs } from 'lib/schema'
+import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
+import { headers as nextHeaders } from 'next/headers'
 
-export async function increment(slug: string) {
-  const data = await queryBuilder.selectFrom('views').where('slug', '=', slug).select(['count']).execute()
-
-  const views = !data.length ? 0 : Number(data[0].count)
-
-  return queryBuilder
-    .insertInto('views')
-    .values({ slug, count: 1 })
-    .onDuplicateKeyUpdate({ count: views + 1 })
-    .execute()
-}
-
-async function getSession(): Promise<Session> {
-  const session = await auth()
-  if (!session || !session.user) {
-    throw new Error('Unauthorized')
-  }
-
-  return session
+export async function increment(route: string) {
+  const headers = nextHeaders()
+  const correlationId = getCorrelationId(headers)
+  const logger = getLogger().child({ correlationId })
+  const geoIpHeaders = await getGeoIp(headers, logger)
+  logger.info('Incrementing view count')
+  const session = await getServerSession()
+  await db()
+    .insert(tbs.views)
+    .values({ route, email: session?.user?.email ?? null, ...(geoIpHeaders ?? {}) })
+  logger.info('Incremented view count')
 }
 
 export async function saveGuestbookEntry(formData: FormData) {
-  const session = await getSession()
-  const email = session.user?.email as string
-  const created_by = session.user?.name as string
-  const entry = formData.get('entry')?.toString() || ''
-  const body = entry.slice(0, 500)
-
-  await queryBuilder.insertInto('guestbook').values({ email, body, created_by }).execute()
-
+  const correlationId = getCorrelationId(nextHeaders())
+  const logger = getLogger().child({ correlationId })
+  logger.info('Saving guestbook entry')
+  const session = await getServerSession()
+  const email = session?.user?.email
+  const comment = formData.get('entry')?.toString()
+  if (!email || !comment) {
+    logger.warn('Missing email or comment')
+    return
+  }
+  await db().insert(tbs.comments).values({ email, comment })
+  logger.info('Saved guestbook entry')
   revalidatePath('/guestbook')
 }

@@ -1,3 +1,4 @@
+import { getViewsForRoute } from 'lib/metrics'
 import { allBlogsSorted } from 'lib/utils'
 import Link from 'next/link'
 import ActivityStreakLogo from 'public/images/main-page/activitystreaklogo.svg'
@@ -41,12 +42,12 @@ async function BlogLink({
   date: string
   description: string
 }) {
-  // const allViews = await getViewsCount();
+  const views = await getViewsForRoute(`/blog/${slug}`)
 
   return (
     <Article
       article={{
-        views: 200,
+        views: views,
         date: date,
         description: description,
         slug: slug,
@@ -57,6 +58,7 @@ async function BlogLink({
 }
 
 export default async function Page() {
+  const viewsForRootPage = await getViewsForRoute('/')
   return (
     <>
       <>
@@ -67,7 +69,7 @@ export default async function Page() {
           </div>
           <div className="flex justify-between items-center  mb-8">
             <p className="font-bold text-xl tracking-tighter">yes, like the ninja turtle</p>
-            <ViewCounter allViews={[{ count: 0, slug: 'test' }]} slug={'test'} trackView />
+            <ViewCounter count={viewsForRootPage} route={'/'} trackView />
           </div>
           <p className="prose prose-neutral dark:prose-invert">
             You can call me Angelo for short! I&apos;m a technology advocate at heart, coffee enthusiast, and pizza

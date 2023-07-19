@@ -1,10 +1,7 @@
 import { PostgresJsDatabase, drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
 import { getEnv } from './env'
-import { auth_tbs } from './schema'
-const dbSchema = {
-  ...auth_tbs,
-}
+import { tbs as dbSchema } from './schema'
 
 type DbClient = PostgresJsDatabase<typeof dbSchema>
 

@@ -1,28 +1,24 @@
 'use client'
 
 import { increment } from 'app/actions'
-import { getViewsForSlug } from 'lib/utils'
 import { useEffect } from 'react'
 
 export default function ViewCounter({
-  slug,
-  allViews,
+  route,
+  count,
   trackView,
 }: {
-  slug: string
-  allViews: {
-    slug: string
-    count: number
-  }[]
+  route: string
   trackView?: boolean
+  count: number
 }) {
-  const number = getViewsForSlug(allViews, slug)
+  // const number = getViewsForSlug(allViews, slug)
 
   useEffect(() => {
     if (trackView) {
-      increment(slug)
+      increment(route)
     }
   }, [])
 
-  return <p className="text-neutral-600 dark:text-neutral-400">{`${number.toLocaleString()} views`}</p>
+  return <p className="text-neutral-600 dark:text-neutral-400">{`${count.toLocaleString()} views`}</p>
 }

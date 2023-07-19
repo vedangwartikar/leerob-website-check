@@ -35,7 +35,7 @@ COPY --from=code /usr/src/app/node_modules ./node_modules
 
 # Copy built application files
 # RUN ls -la
-COPY server.js next.config.js ./
+COPY ./dist/server/server.js next.config.js ./
 
 COPY .next ./.next
 
