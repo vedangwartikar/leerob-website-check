@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { LayoutGroup, motion } from 'framer-motion';
+import clsx from 'clsx'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { LayoutGroup, motion } from 'framer-motion'
 
 const navItems = {
   '/': {
@@ -15,12 +15,12 @@ const navItems = {
   '/guestbook': {
     name: 'guestbook',
   },
-};
+}
 
 export default function Navbar() {
-  let pathname = usePathname() || '/';
+  let pathname = usePathname() || '/'
   if (pathname.includes('/blog/')) {
-    pathname = '/blog';
+    pathname = '/blog'
   }
 
   return (
@@ -33,7 +33,7 @@ export default function Navbar() {
           >
             <div className="flex flex-row space-x-0 pr-10">
               {Object.entries(navItems).map(([path, { name }]) => {
-                const isActive = path === pathname;
+                const isActive = path === pathname
                 return (
                   <Link
                     key={path}
@@ -42,7 +42,7 @@ export default function Navbar() {
                       'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
                       {
                         'text-neutral-500': !isActive,
-                      }
+                      },
                     )}
                   >
                     <span className="relative py-1 px-2">
@@ -60,12 +60,12 @@ export default function Navbar() {
                       ) : null}
                     </span>
                   </Link>
-                );
+                )
               })}
             </div>
           </nav>
         </LayoutGroup>
       </div>
     </aside>
-  );
+  )
 }

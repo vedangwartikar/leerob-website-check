@@ -7,5 +7,5 @@ export default function robots() {
     ],
     sitemap: 'https://michaelangelo.io/sitemap.xml',
     host: 'https://michaelangelo.io',
-  };
+  }
 }

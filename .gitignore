@@ -40,3 +40,5 @@ next-env.d.ts
 
 server.js
 tsconfig.server.tsbuildinfo
+
+*.key

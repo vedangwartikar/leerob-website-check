@@ -4,11 +4,7 @@
     "module": "commonjs",
     "noEmit": false,
     "incremental": true,
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "server.ts"
-  ]
+  "include": ["server.ts"]
 }

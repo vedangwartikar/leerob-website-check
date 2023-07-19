@@ -21,7 +21,6 @@ export function BriefcaseIcon(props: any) {
   )
 }
 
-
 export function ArrowDownIcon(props: any) {
   return (
     <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>

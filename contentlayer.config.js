@@ -1,8 +1,8 @@
-import { defineDocumentType, makeSource } from 'contentlayer/source-files';
-import remarkGfm from 'remark-gfm';
-import rehypePrettyCode from 'rehype-pretty-code';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -13,10 +13,8 @@ const computedFields = {
   tweetIds: {
     type: 'array',
     resolve: (doc) => {
-      const tweetMatches = doc.body.raw.match(
-        /<StaticTweet\sid="[0-9]+"\s\/>/g
-      );
-      return tweetMatches?.map((tweet) => tweet.match(/[0-9]+/g)[0]) || [];
+      const tweetMatches = doc.body.raw.match(/<StaticTweet\sid="[0-9]+"\s\/>/g)
+      return tweetMatches?.map((tweet) => tweet.match(/[0-9]+/g)[0]) || []
     },
   },
   structuredData: {
@@ -28,9 +26,7 @@ const computedFields = {
       datePublished: doc.publishedAt,
       dateModified: doc.lastEditedAt,
       description: doc.summary,
-      image: doc.image
-        ? `https://michaelangelo.io${doc.image}`
-        : `https://michaelangelo.io/og?title=${doc.title}`,
+      image: doc.image ? `https://michaelangelo.io${doc.image}` : `https://michaelangelo.io/og?title=${doc.title}`,
       url: `https://michaelangelo.io/blog/${doc._raw.flattenedPath}`,
       author: {
         '@type': 'Person',
@@ -38,11 +34,11 @@ const computedFields = {
       },
     }),
   },
-};
+}
 
 export const Blog = defineDocumentType(() => ({
   name: 'Blog',
-  filePathPattern: `**/*.mdx`,
+  filePathPattern: '**/*.mdx',
   contentType: 'mdx',
   fields: {
     title: {
@@ -66,7 +62,7 @@ export const Blog = defineDocumentType(() => ({
     },
   },
   computedFields,
-}));
+}))
 
 export default makeSource({
   contentDirPath: 'content',
@@ -83,14 +79,14 @@ export default makeSource({
             // Prevent lines from collapsing in `display: grid` mode, and allow empty
             // lines to be copy/pasted
             if (node.children.length === 0) {
-              node.children = [{ type: 'text', value: ' ' }];
+              node.children = [{ type: 'text', value: ' ' }]
             }
           },
           onVisitHighlightedLine(node) {
-            node.properties.className.push('line--highlighted');
+            node.properties.className.push('line--highlighted')
           },
           onVisitHighlightedWord(node) {
-            node.properties.className = ['word--highlighted'];
+            node.properties.className = ['word--highlighted']
           },
         },
       ],
@@ -104,4 +100,4 @@ export default makeSource({
       ],
     ],
   },
-});
+})

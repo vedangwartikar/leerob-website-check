@@ -1,195 +1,152 @@
-"use client";
-import clsx from "clsx";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { forwardRef, useEffect, useRef } from "react";
+'use client'
+import clsx from 'clsx'
+import { AVATAR_IMAGE_URL } from 'lib/constants'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { forwardRef, useEffect, useRef } from 'react'
 
-const OuterContainer = forwardRef(function OuterContainer(
-  { className, children, ...props }: any,
-  ref
-) {
+const OuterContainer = forwardRef(function OuterContainer({ className, children, ...props }: any, ref) {
   return (
-    <div ref={ref} className={clsx("sm:px-8", className)} {...props}>
+    <div ref={ref} className={clsx('sm:px-8', className)} {...props}>
       <div className="mx-auto max-w-7xl lg:px-8">{children}</div>
     </div>
-  );
-});
+  )
+})
 
-const InnerContainer = forwardRef(function InnerContainer(
-  { className, children, ...props }: any,
-  ref
-) {
+const InnerContainer = forwardRef(function InnerContainer({ className, children, ...props }: any, ref) {
   return (
-    <div
-      ref={ref}
-      className={clsx("relative px-4 sm:px-8 lg:px-12", className)}
-      {...props}
-    >
+    <div ref={ref} className={clsx('relative px-4 sm:px-8 lg:px-12', className)} {...props}>
       <div className="mx-auto max-w-2xl lg:max-w-5xl">{children}</div>
     </div>
-  );
-});
+  )
+})
 
-export const Container = forwardRef(function Container(
-  { children, ...props }: any,
-  ref
-) {
+export const Container = forwardRef(function Container({ children, ...props }: any, ref) {
   return (
     <OuterContainer ref={ref} {...props}>
       <InnerContainer>{children}</InnerContainer>
     </OuterContainer>
-  );
-});
-
-function AvatarContainer({ className, ...props }: any) {
-  return (
-    <div
-      className={clsx(
-        className,
-        "h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:ring-white/10"
-      )}
-      {...props}
-    />
-  );
-}
+  )
+})
 
 function clamp(number: number, a: number, b: number) {
-  let min = Math.min(a, b);
-  let max = Math.max(a, b);
-  return Math.min(Math.max(number, min), max);
+  const min = Math.min(a, b)
+  const max = Math.max(a, b)
+  return Math.min(Math.max(number, min), max)
 }
 
 function Avatar({ large = false, className, ...props }: any) {
   return (
-    <Link
-      href="/"
-      aria-label="Home"
-      className={clsx(className, "pointer-events-auto")}
-      {...props}
-    >
+    <Link href="/" aria-label="Home" className={clsx(className, 'pointer-events-auto')} {...props}>
       <Image
-        src={
-          "https://media.michaelangrivera.com/michaelangrivera/images/main-page/avatar.png"
-        }
+        src={AVATAR_IMAGE_URL}
         width={9}
         height={9}
         alt=""
-        sizes={large ? "4rem" : "2.25rem"}
-        className={clsx(
-          "rounded-full bg-zinc-100 object-cover dark:bg-zinc-800",
-          large ? "h-16 w-16" : "h-9 w-9"
-        )}
+        sizes={large ? '4rem' : '2.25rem'}
+        className={clsx('rounded-full bg-zinc-100 object-cover dark:bg-zinc-800', large ? 'h-16 w-16' : 'h-9 w-9')}
         priority
       />
     </Link>
-  );
+  )
 }
 
 export function Header() {
-  let isHomePage = usePathname() === "/";
+  const isHomePage = usePathname() === '/'
 
-  let headerRef = useRef<any>();
-  let avatarRef = useRef<any>();
-  let isInitial = useRef(true);
+  const headerRef = useRef<any>()
+  const avatarRef = useRef<any>()
+  const isInitial = useRef(true)
 
   useEffect(() => {
-    let downDelay = avatarRef.current?.offsetTop ?? 0;
-    let upDelay = 64;
+    const downDelay = avatarRef.current?.offsetTop ?? 0
+    const upDelay = 64
 
     function setProperty(property: string, value: any) {
-      document.documentElement.style.setProperty(property, value);
+      document.documentElement.style.setProperty(property, value)
     }
 
     function removeProperty(property: string) {
-      document.documentElement.style.removeProperty(property);
+      document.documentElement.style.removeProperty(property)
     }
 
     function updateHeaderStyles() {
-      let { top, height } = headerRef.current
-        ? headerRef.current.getBoundingClientRect()
-        : { top: 0, height: 0 };
-      let scrollY = clamp(
-        window.scrollY,
-        0,
-        document.body.scrollHeight - window.innerHeight
-      );
+      const { top, height } = headerRef.current ? headerRef.current.getBoundingClientRect() : { top: 0, height: 0 }
+      const scrollY = clamp(window.scrollY, 0, document.body.scrollHeight - window.innerHeight)
 
       if (isInitial.current) {
-        setProperty("--header-position", "sticky");
+        setProperty('--header-position', 'sticky')
       }
 
-      setProperty("--content-offset", `${downDelay}px`);
+      setProperty('--content-offset', `${downDelay}px`)
 
       if (isInitial.current || scrollY < downDelay) {
-        setProperty("--header-height", `${downDelay + height}px`);
-        setProperty("--header-mb", `${-downDelay}px`);
+        setProperty('--header-height', `${downDelay + height}px`)
+        setProperty('--header-mb', `${-downDelay}px`)
       } else if (top + height < -upDelay) {
-        let offset = Math.max(height, scrollY - upDelay);
-        setProperty("--header-height", `${offset}px`);
-        setProperty("--header-mb", `${height - offset}px`);
+        const offset = Math.max(height, scrollY - upDelay)
+        setProperty('--header-height', `${offset}px`)
+        setProperty('--header-mb', `${height - offset}px`)
       } else if (top === 0) {
-        setProperty("--header-height", `${scrollY + height}px`);
-        setProperty("--header-mb", `${-scrollY}px`);
+        setProperty('--header-height', `${scrollY + height}px`)
+        setProperty('--header-mb', `${-scrollY}px`)
       }
 
       if (top === 0 && scrollY > 0 && scrollY >= downDelay) {
-        setProperty("--header-inner-position", "fixed");
-        removeProperty("--header-top");
-        removeProperty("--avatar-top");
+        setProperty('--header-inner-position', 'fixed')
+        removeProperty('--header-top')
+        removeProperty('--avatar-top')
       } else {
-        removeProperty("--header-inner-position");
-        setProperty("--header-top", "0px");
-        setProperty("--avatar-top", "0px");
+        removeProperty('--header-inner-position')
+        setProperty('--header-top', '0px')
+        setProperty('--avatar-top', '0px')
       }
     }
 
     function updateAvatarStyles() {
       if (!isHomePage) {
-        return;
+        return
       }
 
-      let fromScale = 1;
-      let toScale = 36 / 64;
-      let fromX = 0;
-      let toX = 2 / 16;
+      const fromScale = 1
+      const toScale = 36 / 64
+      const fromX = 0
+      const toX = 2 / 16
 
-      let scrollY = downDelay - window.scrollY;
+      const scrollY = downDelay - window.scrollY
 
-      let scale = (scrollY * (fromScale - toScale)) / downDelay + toScale;
-      scale = clamp(scale, fromScale, toScale);
+      let scale = (scrollY * (fromScale - toScale)) / downDelay + toScale
+      scale = clamp(scale, fromScale, toScale)
 
-      let x = (scrollY * (fromX - toX)) / downDelay + toX;
-      x = clamp(x, fromX, toX);
+      let x = (scrollY * (fromX - toX)) / downDelay + toX
+      x = clamp(x, fromX, toX)
 
-      setProperty(
-        "--avatar-image-transform",
-        `translate3d(${x}rem, 0, 0) scale(${scale})`
-      );
+      setProperty('--avatar-image-transform', `translate3d(${x}rem, 0, 0) scale(${scale})`)
 
-      let borderScale = 1 / (toScale / scale);
-      let borderX = (-toX + x) * borderScale;
-      let borderTransform = `translate3d(${borderX}rem, 0, 0) scale(${borderScale})`;
+      const borderScale = 1 / (toScale / scale)
+      const borderX = (-toX + x) * borderScale
+      const borderTransform = `translate3d(${borderX}rem, 0, 0) scale(${borderScale})`
 
-      setProperty("--avatar-border-transform", borderTransform);
-      setProperty("--avatar-border-opacity", scale === toScale ? 1 : 0);
+      setProperty('--avatar-border-transform', borderTransform)
+      setProperty('--avatar-border-opacity', scale === toScale ? 1 : 0)
     }
 
     function updateStyles() {
-      updateHeaderStyles();
-      updateAvatarStyles();
-      isInitial.current = false;
+      updateHeaderStyles()
+      updateAvatarStyles()
+      isInitial.current = false
     }
 
-    updateStyles();
-    window.addEventListener("scroll", updateStyles, { passive: true });
-    window.addEventListener("resize", updateStyles);
+    updateStyles()
+    window.addEventListener('scroll', updateStyles, { passive: true })
+    window.addEventListener('resize', updateStyles)
 
     return () => {
-      window.removeEventListener("scroll", updateStyles);
-      window.removeEventListener("resize", updateStyles);
-    };
-  }, [isHomePage]);
+      window.removeEventListener('scroll', updateStyles)
+      window.removeEventListener('resize', updateStyles)
+    }
+  }, [isHomePage])
   return (
     <>
       {isHomePage && (
@@ -199,18 +156,18 @@ export function Header() {
           <div
             className=" "
             //@ts-ignore
-            style={{ position: "" }}
+            style={{ position: '' }}
           >
             <div className="">
               <Avatar
                 large
                 className="block h-16 w-16 origin-left"
-                style={{ transform: "var(--avatar-image-transform)" }}
+                style={{ transform: 'var(--avatar-image-transform)' }}
               />
             </div>
           </div>
         </>
       )}
     </>
-  );
+  )
 }

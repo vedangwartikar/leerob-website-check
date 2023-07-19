@@ -1,8 +1,6 @@
-import 'server-only';
+import 'server-only'
 
-import { queryBuilder } from 'lib/planetscale';
-import { cache } from 'react';
-
+import { cache } from 'react'
 
 // export const getBlogViews = cache(async () => {
 //   if (!process.env.DATABASE_URL) {
@@ -18,5 +16,5 @@ import { cache } from 'react';
 // });
 
 export const getViewsCount = cache(async () => {
-  return [{'slug': 'test', views: 0, 'count': 0}]
-});
+  return [{ slug: 'test', views: 0, count: 0 }]
+})

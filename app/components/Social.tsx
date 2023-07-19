@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import Link from "next/link";
+import clsx from 'clsx'
+import Link from 'next/link'
 
 export function SocialLink({ icon: Icon, ...props }: any) {
   return (
@@ -8,8 +8,6 @@ export function SocialLink({ icon: Icon, ...props }: any) {
     </Link>
   )
 }
-
-
 
 export function TwitterIcon(props: any) {
   return (

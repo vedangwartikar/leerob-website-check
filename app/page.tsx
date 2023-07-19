@@ -1,18 +1,13 @@
-import { allBlogsSorted } from "lib/utils";
-import Link from "next/link";
-import ActivityStreakLogo from "public/images/main-page/activitystreaklogo.svg";
-import { PropsWithChildren, Suspense } from "react";
-import { Article } from "./components/Article";
-import { Header } from "./components/Avatar";
-import { Photos } from "./components/Photos";
-import { Resume } from "./components/Resume";
-import {
-  GitHubIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  SocialLink,
-  TwitterIcon,
-} from "./components/Social";
+import { allBlogsSorted } from 'lib/utils'
+import Link from 'next/link'
+import ActivityStreakLogo from 'public/images/main-page/activitystreaklogo.svg'
+import { PropsWithChildren, Suspense } from 'react'
+import ViewCounter from './blog/view-counter'
+import { Article } from './components/Article'
+import { Header } from './components/Avatar'
+import { Photos } from './components/Photos'
+import { Resume } from './components/Resume'
+import { GitHubIcon, InstagramIcon, LinkedInIcon, SocialLink, TwitterIcon } from './components/Social'
 
 function Badge(props: PropsWithChildren & { href: string }) {
   return (
@@ -21,24 +16,18 @@ function Badge(props: PropsWithChildren & { href: string }) {
       target="_blank"
       className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded p-1 text-sm inline-flex items-center leading-4 text-neutral-900 dark:text-neutral-100 no-underline"
     />
-  );
+  )
 }
 
 function ArrowIcon() {
   return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
         fill="currentColor"
       />
     </svg>
-  );
+  )
 }
 
 async function BlogLink({
@@ -47,23 +36,24 @@ async function BlogLink({
   date,
   description,
 }: {
-  slug: string;
-  name: string;
-  date: string;
-  description: string;
+  slug: string
+  name: string
+  date: string
+  description: string
 }) {
   // const allViews = await getViewsCount();
 
   return (
     <Article
       article={{
+        views: 200,
         date: date,
         description: description,
         slug: slug,
         title: name,
       }}
     ></Article>
-  );
+  )
 }
 
 export default async function Page() {
@@ -73,24 +63,22 @@ export default async function Page() {
         <section>
           <div className="flex flex-col lg:flex-row lg:p-3 lg:-mt-10">
             <Header></Header>
-            <h1 className="font-bold text-2xl mb-8 tracking-tighter mt-4 lg:ml-5">
-              👋 heyo, I'm Michael Angelo
-            </h1>
+            <h1 className="font-bold text-2xl mb-8 tracking-tighter mt-4 lg:ml-5">👋 heyo, I&apos;m Michael Angelo</h1>
           </div>
-          <p className="font-bold text-xl mb-8 tracking-tighter">
-            yes, like the ninja turtle
-          </p>
+          <div className="flex justify-between items-center  mb-8">
+            <p className="font-bold text-xl tracking-tighter">yes, like the ninja turtle</p>
+            <ViewCounter allViews={[{ count: 0, slug: 'test' }]} slug={'test'} trackView />
+          </div>
           <p className="prose prose-neutral dark:prose-invert">
-            You can call me Angelo for short! I'm a technology advocate at
-            heart, coffee enthusiast, and pizza lover. I'm currently a remote
-            SWE at{" "}
+            You can call me Angelo for short! I&apos;m a technology advocate at heart, coffee enthusiast, and pizza
+            lover. I&apos;m currently a remote SWE at{' '}
             <Link className="font-bold" href="https://xealth.io">
-              {" "}
+              {' '}
               Xealth
-            </Link>{" "}
+            </Link>{' '}
             , a digital health startup in Seattle, WA.
             <span className="not-prose"></span>
-            {` I love all things `}
+            {' I love all things '}
             <Badge href="https://nextjs.org">
               <svg
                 width="12"
@@ -107,7 +95,7 @@ export default async function Page() {
               </svg>
               Next.js
             </Badge>
-            {`, `}
+            {', '}
             <Badge href="https://react.dev">
               <svg
                 width="14"
@@ -128,7 +116,7 @@ export default async function Page() {
               </svg>
               React
             </Badge>
-            {`, `}
+            {', '}
             <Badge href="https://nodejs.org">
               <svg
                 width="14"
@@ -145,7 +133,7 @@ export default async function Page() {
               </svg>
               Nodejs
             </Badge>
-            {`, `}
+            {', '}
             <Badge href="https://kubernetes.io/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +155,7 @@ export default async function Page() {
               </svg>
               Kubernetes
             </Badge>
-            {`, `}
+            {', '}
             <Badge href="https://aws.amazon.com">
               <svg
                 enableBackground="new 0 0 70 70"
@@ -178,10 +166,7 @@ export default async function Page() {
                 height="12"
                 className="inline-flex mr-1"
               >
-                <polygon
-                  points="27.09 35.764 25.984 40.34 28.182 40.34 27.115 35.764"
-                  fill="#F7981F"
-                />
+                <polygon points="27.09 35.764 25.984 40.34 28.182 40.34 27.115 35.764" fill="#F7981F" />
                 <path
                   d="m16.302 40.744v0.666c0 3.311 3.579 6.66 7.991 6.66h23.533c4.412 0 7.991-3.35 7.991-6.66v-0.666c0-3.078-3.098-6.943-7.081-7.283-0.089-2.752-2.342-4.955-5.113-4.955-1.076 0-2.074 0.334-2.898 0.9-1.58-3.52-5.107-5.977-9.216-5.977-5.579 0-10.101 4.521-10.101 10.102 0 0.1 0.012 0.195 0.015 0.293-2.993 0.867-5.121 4.371-5.121 6.92zm12.699 3.055l-0.572-2.275h-2.717l-0.599 2.275h-1.547l2.639-9.283h1.898l2.444 9.283h-1.546zm9.012 0h-1.716l-1.196-6.994h-0.026l-1.183 6.994h-1.716l-1.795-9.283h1.496l1.221 7.215h0.027l1.221-7.215h1.561l1.248 7.254h0.026l1.209-7.254h1.469l-1.846 9.283zm5.433 0.181c-2.301 0-2.821-1.533-2.821-2.834v-0.221h1.482v0.234c0 1.131 0.494 1.703 1.521 1.703 0.936 0 1.403-0.664 1.403-1.354 0-0.975-0.493-1.404-1.325-1.65l-1.015-0.352c-1.353-0.52-1.937-1.221-1.937-2.547 0-1.691 1.144-2.627 2.886-2.627 2.379 0 2.626 1.482 2.626 2.443v0.209h-1.482v-0.195c0-0.846-0.377-1.34-1.3-1.34-0.637 0-1.248 0.352-1.248 1.34 0 0.793 0.403 1.195 1.392 1.572l1 0.365c1.313 0.467 1.886 1.184 1.886 2.457 1e-3 1.979-1.196 2.797-3.068 2.797z"
                   fill="#F7981F"
@@ -201,7 +186,7 @@ export default async function Page() {
               </svg>
               Cloud
             </Badge>
-            {`, `}
+            {', '}
             <Badge href="https://svelte.dev/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -222,7 +207,7 @@ export default async function Page() {
               </svg>
               Svelte
             </Badge>
-            {`, `}
+            {', '}
             <Badge href="https://go.dev/">
               <svg
                 height="14"
@@ -253,13 +238,7 @@ export default async function Page() {
                   />
                   <path d="m67.337 29.385c-.598-10.36-5.18-18.428-12.75-23.508-6.774-4.582-15.739-6.375-24.604-5.28-8.865 1.197-17.034 5.181-22.413 11.457-5.976 6.972-8.267 16.136-6.175 26.695l.896-.2-.896.2c9.363 36.656 68.133 27.791 65.942-9.364zm-64.15 9.165c-1.992-10.06.2-18.627 5.778-25.102 5.08-5.877 12.75-9.761 21.217-10.857s16.934.598 23.31 4.98c7.071 4.782 11.355 12.253 11.952 22.114 2.092 34.764-53.391 43.132-62.256 8.865z" />
                   <ellipse cx="18.03" cy="32.872" rx="9.662" ry="10.459" />
-                  <ellipse
-                    cx="22.412"
-                    cy="35.262"
-                    fill="#fff"
-                    rx="2.291"
-                    ry="2.689"
-                  />
+                  <ellipse cx="22.412" cy="35.262" fill="#fff" rx="2.291" ry="2.689" />
                 </g>
                 <g transform="translate(129.618 18.098)">
                   <path
@@ -268,13 +247,7 @@ export default async function Page() {
                   />
                   <path d="m66.44 24.604c-8.865-38.151-68.63-27.692-66.24 11.455v.1c3.286 19.324 20.52 29.186 39.545 25.998 8.665-1.494 16.435-5.677 21.515-11.853 5.578-6.874 7.57-15.739 5.18-25.7zm-6.673 24.504c-4.782 5.778-12.053 9.762-20.321 11.157-18.03 2.988-34.167-6.276-37.354-24.405-2.192-36.856 54.188-46.718 62.555-10.858 2.192 9.463.399 17.731-4.88 24.106z" />
                   <ellipse cx="17.631" cy="34.167" rx="9.463" ry="10.459" />
-                  <ellipse
-                    cx="22.014"
-                    cy="36.557"
-                    fill="#fff"
-                    rx="2.191"
-                    ry="2.689"
-                  />
+                  <ellipse cx="22.014" cy="36.557" fill="#fff" rx="2.191" ry="2.689" />
                 </g>
                 <path
                   d="m112.785 83.002c-7.87.697-14.245 9.961-10.16 17.332 5.378 9.762 17.431-.896 24.902.1 8.666.2 15.739 9.164 22.612 1.594 7.67-8.368-3.287-16.536-11.954-20.122z"
@@ -287,30 +260,22 @@ export default async function Page() {
                 <path d="m140.178 78.719c-3.088-11.356-28.987-9.662-28.39 3.885 1.295 10.06 31.378 7.37 28.39-3.885z" />
               </svg>
               Go
-            </Badge>
-            {` `} and more. Feel free to check out{" "}
+            </Badge>{' '}
+            and more. Feel free to check out{' '}
             <Link className="font-bold" href="/blog">
-              {" "}
+              {' '}
               my blog
-            </Link>{" "}
+            </Link>{' '}
             or learn more about me below!
           </p>
           <div className="mt-6 flex gap-6">
-            <SocialLink
-              href="https://twitter.com/michaelangeloi0"
-              aria-label="Follow on Twitter"
-              icon={TwitterIcon}
-            />
+            <SocialLink href="https://twitter.com/michaelangeloi0" aria-label="Follow on Twitter" icon={TwitterIcon} />
             <SocialLink
               href="https://instagram.com/michaelangelo.io"
               aria-label="Follow on Instagram"
               icon={InstagramIcon}
             />
-            <SocialLink
-              href="https://github.com/michaelangelo-io"
-              aria-label="Follow on GitHub"
-              icon={GitHubIcon}
-            />
+            <SocialLink href="https://github.com/michaelangelo-io" aria-label="Follow on GitHub" icon={GitHubIcon} />
             <SocialLink
               href="https://www.linkedin.com/in/michaelangelo-io/"
               aria-label="Follow on LinkedIn"
@@ -320,15 +285,14 @@ export default async function Page() {
           <Photos />
           <div className="prose prose-neutral dark:prose-invert">
             <p>
-              Other than tech, I love to seek adventure. I'm an avid runner,
-              cyclist, and drummer{" "}
-              {"(my girlfriend definitely enjoys it, I promise)"}.
+              Other than tech, I love to seek adventure. I&apos;m an avid runner, cyclist, and drummer{' '}
+              {'(my girlfriend definitely enjoys it, I promise)'}.
             </p>
           </div>
           <div className="prose prose-neutral dark:prose-invert">
             <p>
-              I'd like to use this site to share my experiences, dumb mistakes,
-              learnings, and maybe some memes. I hope you enjoy!
+              I&apos;d like to use this site to share my experiences, dumb mistakes, learnings, and maybe some memes. I
+              hope you enjoy!
             </p>
           </div>
           <div className="my-8 flex flex-col space-y-4 w-full">
@@ -373,27 +337,18 @@ export default async function Page() {
           </ul>
           <div className="my-5 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
           <div className="prose prose-neutral dark:prose-invert">
-            <p>
-              I also have some of my own projects I'm working on. Check {"'"}em
-              out if you want.
-            </p>
+            <p>I also have some of my own projects I&apos;m working on. Check &apos;em out if you want.</p>
           </div>
           <div className="my-8 flex flex-col  w-full  md:flex-row items-center space-y-1 space-x-1">
             <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
-              <Link href={"https://activitystreak.app"}>
-                {" "}
+              <Link href={'https://activitystreak.app'}>
+                {' '}
                 <ActivityStreakLogo className="w-15 h-10" alt="Site Title" />
               </Link>
             </div>
 
             <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
-              <svg
-                width="50"
-                height="40"
-                viewBox="0 0 116 115"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="50" height="40" viewBox="0 0 116 115" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_13_20)">
                   <rect width="116" height="116" rx="26" fill="#9333EA" />
                   <path
@@ -411,18 +366,15 @@ export default async function Page() {
                   </clipPath>
                 </defs>
               </svg>
-              <Link href={"https://ts-rest.com/"} className="font-bold text-sm">
-                {" "}
+              <Link href={'https://ts-rest.com/'} className="font-bold text-sm">
+                {' '}
                 Ts-Rest Core Team
               </Link>
             </div>
             <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center justify-between px-3 py-4">
-              <Link
-                href={"https://github.com/Xealth/cherry-pick-action"}
-                className="font-bold text-sm"
-              >
-                {" "}
-                🍒 Cherry Pick GHA Action{" "}
+              <Link href={'https://github.com/Xealth/cherry-pick-action'} className="font-bold text-sm">
+                {' '}
+                🍒 Cherry Pick GHA Action{' '}
               </Link>
             </div>
           </div>
@@ -435,15 +387,15 @@ export default async function Page() {
         <div className="text-xs text-center mt-10">
           <div>Copyright © Michael Angelo Rivera, 2023</div>
           <div>
-            {" "}
-            Thank you{" "}
-            <Link href={"https://leerob.io/"} className="font-bold">
+            {' '}
+            Thank you{' '}
+            <Link href={'https://leerob.io/'} className="font-bold">
               Lee Rob
-            </Link>{" "}
+            </Link>{' '}
             for the inspiration!
           </div>
         </div>
       </>
     </>
-  );
+  )
 }

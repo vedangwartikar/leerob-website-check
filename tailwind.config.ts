@@ -1,12 +1,8 @@
-import type { Config } from 'tailwindcss';
-import typography from '@tailwindcss/typography';
+import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography'
 
 export default {
-  content: [
-    './app/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './content/**/*.mdx',
-  ],
+  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './content/**/*.mdx'],
   theme: {
     extend: {
       fontFamily: {
@@ -25,5 +21,5 @@ export default {
   future: {
     hoverOnlyWhenSupported: true,
   },
-  plugins: [typography,   ],
-} satisfies Config;
+  plugins: [typography],
+} satisfies Config

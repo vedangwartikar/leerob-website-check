@@ -1,27 +1,27 @@
-import { useMDXComponent } from "next-contentlayer/hooks";
-import Image from "next/image";
-import Link from "next/link";
+import { useMDXComponent } from 'next-contentlayer/hooks'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const CustomLink = (props: any) => {
-  const href = props.href;
+  const href = props.href
 
-  if (href.startsWith("/")) {
+  if (href.startsWith('/')) {
     return (
       <Link href={href} {...props}>
         {props.children}
       </Link>
-    );
+    )
   }
 
-  if (href.startsWith("#")) {
-    return <a {...props} />;
+  if (href.startsWith('#')) {
+    return <a {...props} />
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
-};
+  return <a target="_blank" rel="noopener noreferrer" {...props} />
+}
 
 function RoundedImage(props: any) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+  return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
 function Callout(props: any) {
@@ -30,7 +30,7 @@ function Callout(props: any) {
       <div className="flex items-center w-4 mr-4">{props.emoji}</div>
       <div className="w-full callout">{props.children}</div>
     </div>
-  );
+  )
 }
 
 function ProsCard({ title, pros }: { title: string; pros: string[] }) {
@@ -42,13 +42,7 @@ function ProsCard({ title, pros }: { title: string; pros: string[] }) {
           <div key={pro} className="flex font-medium items-baseline mb-2">
             <div className="h-4 w-4 mr-2">
               <svg className="h-4 w-4 text-emerald-500" viewBox="0 0 24 24">
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
                   <path d="M22 4L12 14.01l-3-3" />
                 </g>
@@ -59,7 +53,7 @@ function ProsCard({ title, pros }: { title: string; pros: string[] }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 function ConsCard({ title, cons }: { title: string; cons: string[] }) {
@@ -84,7 +78,7 @@ function ConsCard({ title, cons }: { title: string; cons: string[] }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 const components = {
@@ -93,18 +87,18 @@ const components = {
   Callout,
   ProsCard,
   ConsCard,
-};
+}
 
 interface MdxProps {
-  code: string;
+  code: string
 }
 
 export function Mdx({ code }: MdxProps) {
-  const Component = useMDXComponent(code);
+  const Component = useMDXComponent(code)
 
   return (
     <article className="prose prose-quoteless prose-neutral dark:prose-invert">
       <Component components={{ ...components }} />
     </article>
-  );
+  )
 }

@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { useRef } from 'react';
-import { saveGuestbookEntry } from '../actions';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { useRef } from 'react'
+import { saveGuestbookEntry } from '../actions'
+import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 
 export default function Form() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { pending } = useFormStatus();
+  const formRef = useRef<HTMLFormElement>(null)
+  const { pending } = useFormStatus()
 
   return (
     <form
@@ -14,8 +14,8 @@ export default function Form() {
       className="relative max-w-[500px] text-sm"
       ref={formRef}
       action={async (formData) => {
-        await saveGuestbookEntry(formData);
-        formRef.current?.reset();
+        await saveGuestbookEntry(formData)
+        formRef.current?.reset()
       }}
     >
       <input
@@ -35,5 +35,5 @@ export default function Form() {
         Sign
       </button>
     </form>
-  );
+  )
 }

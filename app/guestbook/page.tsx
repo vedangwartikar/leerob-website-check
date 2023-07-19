@@ -1,58 +1,53 @@
-import { auth } from "lib/auth";
-import { queryBuilder } from "lib/planetscale";
-import type { Metadata } from "next";
-import { SignIn, SignOut } from "./buttons";
-import Form from "./form";
+import { auth } from 'lib/auth'
+import { queryBuilder } from 'lib/planetscale'
+import type { Metadata } from 'next'
+import { SignIn, SignOut } from './buttons'
+import Form from './form'
 
 async function getGuestbook() {
   const data = await queryBuilder
-    .selectFrom("guestbook")
-    .select(["id", "body", "created_by", "updated_at"])
-    .orderBy("updated_at", "desc")
+    .selectFrom('guestbook')
+    .select(['id', 'body', 'created_by', 'updated_at'])
+    .orderBy('updated_at', 'desc')
     .limit(100)
-    .execute();
+    .execute()
 
-  return data;
+  return data
 }
 
 export const metadata: Metadata = {
-  title: "Guestbook",
-  description: "Sign my guestbook and leave your mark.",
-};
+  title: 'Guestbook',
+  description: 'Sign my guestbook and leave your mark.',
+}
 
-export const dynamic = "force-dynamic";
-export const runtime = "edge";
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 export default async function GuestbookPage() {
-  let entries;
-  let session;
+  let entries
+  let session
 
   try {
-    const [guestbookRes, sessionRes] = await Promise.allSettled([
-      getGuestbook(),
-      auth(),
-    ]);
+    const [guestbookRes, sessionRes] = await Promise.allSettled([getGuestbook(), auth()])
 
-    if (guestbookRes.status === "fulfilled" && guestbookRes.value[0]) {
-      entries = guestbookRes.value;
+    if (guestbookRes.status === 'fulfilled' && guestbookRes.value[0]) {
+      entries = guestbookRes.value
     } else {
-      console.error(guestbookRes);
+      console.error(guestbookRes)
     }
 
-    if (sessionRes.status === "fulfilled") {
-      session = sessionRes.value;
+    if (sessionRes.status === 'fulfilled') {
+      session = sessionRes.value
     } else {
-      console.error(sessionRes);
+      console.error(sessionRes)
     }
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 
   return (
     <section>
-      <h1 className="font-bold text-2xl mb-8 tracking-tighter">
-        sign my guestbook
-      </h1>
+      <h1 className="font-bold text-2xl mb-8 tracking-tighter">sign my guestbook</h1>
       {session?.user ? (
         <>
           <Form />
@@ -72,5 +67,5 @@ export default async function GuestbookPage() {
         </div>
       ))} */}
     </section>
-  );
+  )
 }
