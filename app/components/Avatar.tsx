@@ -1,9 +1,9 @@
 'use client'
 import clsx from 'clsx'
-import { AVATAR_IMAGE_URL } from 'lib/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import AVATAR_IMAGE from 'public/images/main-page/avatar.png'
 import { forwardRef, useEffect, useRef } from 'react'
 
 const OuterContainer = forwardRef(function OuterContainer({ className, children, ...props }: any, ref) {
@@ -40,7 +40,7 @@ function Avatar({ large = false, className, ...props }: any) {
   return (
     <Link href="/" aria-label="Home" className={clsx(className, 'pointer-events-auto')} {...props}>
       <Image
-        src={AVATAR_IMAGE_URL}
+        src={AVATAR_IMAGE}
         width={9}
         height={9}
         alt=""

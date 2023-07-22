@@ -32,14 +32,19 @@ export interface IPResponse {
   org: string
 }
 
-export async function getGeoIp(headers: Headers, logger: ReturnType<typeof getLogger>) {
-  let flyIp = headers.get('fly-client-ip')
+export async function getGeoIp(flyIp: null | string, logger: ReturnType<typeof getLogger>) {
   if (!flyIp && process.env.NODE_ENV === 'development') {
     flyIp = '2600:1700:3b8a:a010:f812:c756:5c25:c756'
   }
   if (!flyIp) return null
   try {
-    const response = await ((await fetch(`https://ipapi.co/${flyIp}/json/`)).json() as Promise<IPResponse>)
+    const response = await ((
+      await fetch(`https://ipapi.co/${flyIp}/json/`, {
+        next: {
+          revalidate: 30 * 24 * 60 * 60,
+        },
+      })
+    ).json() as Promise<IPResponse>)
     return {
       geo_ip_country: response?.country || null,
       geo_ip_region: response?.region || null,

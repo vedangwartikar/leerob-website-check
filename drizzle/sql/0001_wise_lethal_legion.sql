@@ -1,0 +1,1 @@
+ALTER TABLE "michaelangeloio"."comments" RENAME TO "guestbook_entries";

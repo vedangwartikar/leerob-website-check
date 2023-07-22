@@ -41,3 +41,4 @@ build
 # flyctl launch added from node_modules/.pnpm/tailwindcss@3.3.2/node_modules/tailwindcss/stubs/.gitignore
 !node_modules/.pnpm/tailwindcss@3.3.2/node_modules/tailwindcss/stubs/**/*
 fly.toml
+.next/cache

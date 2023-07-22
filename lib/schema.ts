@@ -1,9 +1,9 @@
 import { AdapterAccount } from '@auth/core/adapters'
 import {
+  bigint,
   bigserial,
   boolean,
   index,
-  integer,
   pgSchema,
   primaryKey,
   text,
@@ -45,7 +45,8 @@ export const accounts = schema.table(
     providerAccountId: text('providerAccountId').notNull(),
     refresh_token: text('refresh_token'),
     access_token: text('access_token'),
-    expires_at: integer('expires_at'),
+    expires_at: bigint('expires_at', { mode: 'number' }),
+    refresh_token_expires_in: bigint('refresh_token_expires_in', { mode: 'number' }),
     token_type: text('token_type'),
     scope: text('scope'),
     id_token: text('id_token'),
@@ -120,8 +121,8 @@ export const views = schema.table(
   },
 )
 
-export const comments = schema.table(
-  'comments',
+export const guestbook_entries = schema.table(
+  'guestbook_entries',
   {
     id: bigserial('id', { mode: 'bigint' }).notNull().primaryKey(),
     email: text('email'),
@@ -145,5 +146,5 @@ export const tbs = {
   sessions,
   verificationTokens,
   views,
-  comments,
+  guestbook_entries,
 }

@@ -7,6 +7,7 @@ const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string(),
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
+  MIGRATION_URL: z.string(),
 })
 
 let fetchedEnvs: z.infer<typeof envSchema> | null = null
@@ -21,6 +22,7 @@ export const getEnv = () => {
       GOOGLE_CLIENT_SECRET,
       GITHUB_CLIENT_ID,
       GITHUB_CLIENT_SECRET,
+      MIGRATION_URL,
     } = process.env
     const envs = {
       DATABASE_URL,
@@ -30,6 +32,7 @@ export const getEnv = () => {
       GOOGLE_CLIENT_SECRET,
       GITHUB_CLIENT_ID,
       GITHUB_CLIENT_SECRET,
+      MIGRATION_URL,
     }
     const result = envSchema.safeParse(envs)
     if (!result.success) {

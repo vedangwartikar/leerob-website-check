@@ -1,6 +1,6 @@
 import NextAuth, { AuthOptions } from 'next-auth'
 import { Adapter } from 'next-auth/adapters'
-import GoogleProvider from 'next-auth/providers/google'
+import GitHub from 'next-auth/providers/github'
 import { NextRequest, NextResponse } from 'next/server'
 import { Logger } from 'pino'
 import { pgDrizzleAdapter } from './auth.adapter'
@@ -14,17 +14,31 @@ export const getAuthOptions = (logger: Logger) => {
   const options: AuthOptions = {
     adapter: pgDrizzleAdapter(db()) as Adapter,
     providers: [
-      GoogleProvider({
-        clientId: env.GOOGLE_CLIENT_ID,
-        clientSecret: env.GOOGLE_CLIENT_SECRET,
+      // GoogleProvider({
+      //   clientId: env.GOOGLE_CLIENT_ID,
+      //   clientSecret: env.GOOGLE_CLIENT_SECRET,
+      // }),
+      GitHub({
+        clientId: env.GITHUB_CLIENT_ID,
+        clientSecret: env.GITHUB_CLIENT_SECRET,
       }),
     ],
     logger: {
-      debug: logger.debug.bind(logger),
-      error: logger.error.bind(logger),
-      fatal: logger.fatal.bind(logger),
-      info: logger.info.bind(logger),
-      warn: logger.warn.bind(logger),
+      debug: (code, metadata) => {
+        logger.debug({ msg: code, metadata })
+      },
+      error: (code, metadata) => {
+        logger.error({ msg: code, metadata })
+      },
+      fatal: (code: string, metadata: any) => {
+        logger.fatal({ msg: code, metadata })
+      },
+      info: (code: string, metadata: any) => {
+        logger.info({ msg: code, metadata })
+      },
+      warn: (code) => {
+        logger.warn({ msg: code })
+      },
     },
   }
   return options

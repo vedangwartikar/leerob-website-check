@@ -1,5 +1,11 @@
+import { GitHubIcon } from 'app/components/icons'
+import { getAuthOptions } from 'lib/auth'
+import { getCorrelationId, getLogger } from 'lib/logger'
 import type { Metadata } from 'next'
-
+import { getServerSession } from 'next-auth'
+import { headers as nextHeaders } from 'next/headers'
+import { SignIn, SignOut } from './buttons'
+import Form from './form'
 // async function getGuestbook() {
 //   const data = await queryBuilder
 //     .selectFrom('guestbook')
@@ -19,6 +25,9 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function GuestbookPage() {
+  const correlationId = getCorrelationId(nextHeaders())
+  const logger = getLogger().child({ correlationId })
+  const session = await getServerSession(getAuthOptions(logger))
   // let entries
   // let session
 
@@ -43,14 +52,16 @@ export default async function GuestbookPage() {
   return (
     <section>
       <h1 className="font-bold text-2xl mb-8 tracking-tighter">sign my guestbook</h1>
-      {/* {session?.user ? (
+      {session?.user ? (
         <>
           <Form />
           <SignOut />
         </>
       ) : (
-        <SignIn />
-      )} */}
+        <SignIn>
+          <GitHubIcon />
+        </SignIn>
+      )}
       {/* {entries.map((entry) => (
         <div key={entry.id} className="flex flex-col space-y-1 mb-4">
           <div className="w-full text-sm break-words">
