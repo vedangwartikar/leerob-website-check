@@ -50,6 +50,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-virtuoso:
+    specifier: ^4.4.1
+    version: 4.4.1(react-dom@18.2.0)(react@18.2.0)
   react-wrap-balancer:
     specifier: ^1.0.0
     version: 1.0.0(react@18.2.0)
@@ -5632,6 +5635,17 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-virtuoso@4.4.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-QrZ0JLnZFH8ltMw6q+S7U1+V2vUcSHzoIfLRzQKSv4nMJhEdjiZ+e9PqWCI7xJiy2AmSCAgo7g1V5osuurJo2Q==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16 || >=17 || >= 18'
+      react-dom: '>=16 || >=17 || >= 18'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-wrap-balancer@1.0.0(react@18.2.0):

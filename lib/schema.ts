@@ -124,7 +124,7 @@ export const views = schema.table(
 export const guestbook_entries = schema.table(
   'guestbook_entries',
   {
-    id: bigserial('id', { mode: 'bigint' }).notNull().primaryKey(),
+    id: bigserial('id', { mode: 'number' }).notNull().primaryKey(),
     email: text('email'),
     comment: varchar('comment', {
       length: 2000,

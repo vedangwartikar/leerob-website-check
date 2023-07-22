@@ -4,6 +4,7 @@ import Link from 'next/link'
 import ActivityStreakLogo from 'public/images/main-page/activitystreaklogo.svg'
 import { PropsWithChildren, Suspense } from 'react'
 import ViewCounter from './blog/view-counter'
+import { FadeIn, FadeUp, PopIn } from './components/Animations'
 import { Article } from './components/Article'
 import { Header } from './components/Avatar'
 import { Photos } from './components/Photos'
@@ -61,16 +62,20 @@ export default async function Page() {
   const viewsForRootPage = await getViewsForRoute('/')
   return (
     <>
-      <>
-        <section>
+      <section>
+        <PopIn delay={0.1}>
           <div className="flex flex-col lg:flex-row lg:p-3 lg:-mt-10">
             <Header></Header>
             <h1 className="font-bold text-2xl mb-8 tracking-tighter mt-4 lg:ml-5">👋 heyo, I&apos;m Michael Angelo</h1>
           </div>
-          <div className="flex justify-between items-center  mb-8">
+        </PopIn>
+        <div className="flex justify-between items-center  mb-8">
+          <FadeIn delay={1}>
             <p className="font-bold text-xl tracking-tighter">yes, like the ninja turtle</p>
-            <ViewCounter count={viewsForRootPage} route={'/'} trackView />
-          </div>
+          </FadeIn>
+          <ViewCounter count={viewsForRootPage} route={'/'} trackView />
+        </div>
+        <FadeUp>
           <p className="prose prose-neutral dark:prose-invert">
             You can call me Angelo for short! I&apos;m a technology advocate at heart, coffee enthusiast, and pizza
             lover. I&apos;m currently a remote SWE at{' '}
@@ -270,134 +275,133 @@ export default async function Page() {
             </Link>{' '}
             or learn more about me below!
           </p>
-          <div className="mt-6 flex gap-6">
-            <SocialLink href="https://twitter.com/michaelangeloi0" aria-label="Follow on Twitter" icon={TwitterIcon} />
-            <SocialLink
-              href="https://instagram.com/michaelangelo.io"
-              aria-label="Follow on Instagram"
-              icon={InstagramIcon}
-            />
-            <SocialLink href="https://github.com/michaelangelo-io" aria-label="Follow on GitHub" icon={GitHubIcon} />
-            <SocialLink
-              href="https://www.linkedin.com/in/michaelangelo-io/"
-              aria-label="Follow on LinkedIn"
-              icon={LinkedInIcon}
-            />
+        </FadeUp>
+        <div className="mt-6 flex gap-6">
+          <SocialLink href="https://twitter.com/michaelangeloi0" aria-label="Follow on Twitter" icon={TwitterIcon} />
+          <SocialLink
+            href="https://instagram.com/michaelangelo.io"
+            aria-label="Follow on Instagram"
+            icon={InstagramIcon}
+          />
+          <SocialLink href="https://github.com/michaelangelo-io" aria-label="Follow on GitHub" icon={GitHubIcon} />
+          <SocialLink
+            href="https://www.linkedin.com/in/michaelangelo-io/"
+            aria-label="Follow on LinkedIn"
+            icon={LinkedInIcon}
+          />
+        </div>
+        <Photos />
+        <div className="prose prose-neutral dark:prose-invert">
+          <p>
+            Other than tech, I love to seek adventure. I&apos;m an avid runner, cyclist, and drummer{' '}
+            {'(my girlfriend definitely enjoys it, I promise)'}.
+          </p>
+        </div>
+        <div className="prose prose-neutral dark:prose-invert">
+          <p>
+            I&apos;d like to use this site to share my experiences, dumb mistakes, learnings, and maybe some memes. I
+            hope you enjoy!
+          </p>
+        </div>
+        <div className="my-8 flex flex-col space-y-4 w-full">
+          <Suspense>
+            {allBlogsSorted()
+              .slice(-3)
+              .map((blog, i) => (
+                //@ts-ignore
+                <BlogLink
+                  name={blog.title}
+                  slug={blog.slug}
+                  date={blog.publishedAt}
+                  description={blog.summary}
+                  key={i}
+                />
+              ))}
+          </Suspense>
+        </div>
+        <ul className="flex flex-col md:flex-row mt-8 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-600 dark:text-neutral-300">
+          <li>
+            <a
+              className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://michaelangeloio.substack.com/"
+            >
+              <ArrowIcon />
+              <p className="h-7 ml-2">my substack</p>
+            </a>
+          </li>
+          <li>
+            <a
+              className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://michaelangelo-io.medium.com/"
+            >
+              <ArrowIcon />
+              <p className="h-7 ml-2">my medium</p>
+            </a>
+          </li>
+        </ul>
+        <div className="my-5 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
+        <div className="prose prose-neutral dark:prose-invert">
+          <p>I also have some of my own projects I&apos;m working on. Check &apos;em out if you want.</p>
+        </div>
+        <div className="my-8 flex flex-col  w-full  md:flex-row items-center space-y-1 space-x-1">
+          <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
+            <Link href={'https://activitystreak.app'}>
+              {' '}
+              <ActivityStreakLogo className="w-15 h-10" alt="Site Title" />
+            </Link>
           </div>
-          <Photos />
-          <div className="prose prose-neutral dark:prose-invert">
-            <p>
-              Other than tech, I love to seek adventure. I&apos;m an avid runner, cyclist, and drummer{' '}
-              {'(my girlfriend definitely enjoys it, I promise)'}.
-            </p>
-          </div>
-          <div className="prose prose-neutral dark:prose-invert">
-            <p>
-              I&apos;d like to use this site to share my experiences, dumb mistakes, learnings, and maybe some memes. I
-              hope you enjoy!
-            </p>
-          </div>
-          <div className="my-8 flex flex-col space-y-4 w-full">
-            <Suspense>
-              {allBlogsSorted()
-                .slice(-3)
-                .map((blog, i) => (
-                  //@ts-ignore
-                  <BlogLink
-                    name={blog.title}
-                    slug={blog.slug}
-                    date={blog.publishedAt}
-                    description={blog.summary}
-                    key={i}
-                  />
-                ))}
-            </Suspense>
-          </div>
-          <ul className="flex flex-col md:flex-row mt-8 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-600 dark:text-neutral-300">
-            <li>
-              <a
-                className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
-                rel="noopener noreferrer"
-                target="_blank"
-                href="https://michaelangeloio.substack.com/"
-              >
-                <ArrowIcon />
-                <p className="h-7 ml-2">my substack</p>
-              </a>
-            </li>
-            <li>
-              <a
-                className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
-                rel="noopener noreferrer"
-                target="_blank"
-                href="https://michaelangelo-io.medium.com/"
-              >
-                <ArrowIcon />
-                <p className="h-7 ml-2">my medium</p>
-              </a>
-            </li>
-          </ul>
-          <div className="my-5 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
-          <div className="prose prose-neutral dark:prose-invert">
-            <p>I also have some of my own projects I&apos;m working on. Check &apos;em out if you want.</p>
-          </div>
-          <div className="my-8 flex flex-col  w-full  md:flex-row items-center space-y-1 space-x-1">
-            <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
-              <Link href={'https://activitystreak.app'}>
-                {' '}
-                <ActivityStreakLogo className="w-15 h-10" alt="Site Title" />
-              </Link>
-            </div>
 
-            <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
-              <svg width="50" height="40" viewBox="0 0 116 115" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clipPath="url(#clip0_13_20)">
-                  <rect width="116" height="116" rx="26" fill="#9333EA" />
-                  <path
-                    d="M62.487 59.9566L95.1166 60.1262L95.1493 53.8212L62.5198 53.6517L62.487 59.9566ZM62.5863 40.8469L95.2159 41.0164L95.2493 34.5815L62.6197 34.412L62.5863 40.8469ZM62.4168 73.4765L95.0463 73.646L95.0129 80.0809L62.3833 79.9114L62.4168 73.4765Z"
-                    fill="white"
-                  />
-                  <path
-                    d="M46.06 64.92C52.3 62.58 55.875 57.51 55.875 50.555C55.875 40.545 48.595 34.5 36.7 34.5H18.5V40.935H36.44C44.305 40.935 48.4 44.445 48.4 50.555C48.4 56.6 44.305 60.175 36.44 60.175H18.5V80H25.91V66.48H36.7C37.48 66.48 38.325 66.48 39.04 66.415L48.595 80H56.655L46.06 64.92Z"
-                    fill="white"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_13_20">
-                    <rect width="116" height="115" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-              <Link href={'https://ts-rest.com/'} className="font-bold text-sm">
-                {' '}
-                Ts-Rest Core Team
-              </Link>
-            </div>
-            <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center justify-between px-3 py-4">
-              <Link href={'https://github.com/Xealth/cherry-pick-action'} className="font-bold text-sm">
-                {' '}
-                🍒 Cherry Pick GHA Action{' '}
-              </Link>
-            </div>
+          <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
+            <svg width="50" height="40" viewBox="0 0 116 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_13_20)">
+                <rect width="116" height="116" rx="26" fill="#9333EA" />
+                <path
+                  d="M62.487 59.9566L95.1166 60.1262L95.1493 53.8212L62.5198 53.6517L62.487 59.9566ZM62.5863 40.8469L95.2159 41.0164L95.2493 34.5815L62.6197 34.412L62.5863 40.8469ZM62.4168 73.4765L95.0463 73.646L95.0129 80.0809L62.3833 79.9114L62.4168 73.4765Z"
+                  fill="white"
+                />
+                <path
+                  d="M46.06 64.92C52.3 62.58 55.875 57.51 55.875 50.555C55.875 40.545 48.595 34.5 36.7 34.5H18.5V40.935H36.44C44.305 40.935 48.4 44.445 48.4 50.555C48.4 56.6 44.305 60.175 36.44 60.175H18.5V80H25.91V66.48H36.7C37.48 66.48 38.325 66.48 39.04 66.415L48.595 80H56.655L46.06 64.92Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_13_20">
+                  <rect width="116" height="115" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+            <Link href={'https://ts-rest.com/'} className="font-bold text-sm">
+              {' '}
+              Ts-Rest Core Team
+            </Link>
           </div>
-          <div className="prose prose-neutral dark:prose-invert">
-            <p>If you need more professional info, download below!</p>
-          </div>
-        </section>
-        <Resume />
-
-        <div className="text-xs text-center mt-10">
-          <div>Copyright © Michael Angelo Rivera, 2023</div>
-          <div>
-            {' '}
-            Thank you{' '}
-            <Link href={'https://leerob.io/'} className="font-bold">
-              Lee Rob
-            </Link>{' '}
-            for the inspiration!
+          <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center justify-between px-3 py-4">
+            <Link href={'https://github.com/Xealth/cherry-pick-action'} className="font-bold text-sm">
+              {' '}
+              🍒 Cherry Pick GHA Action{' '}
+            </Link>
           </div>
         </div>
-      </>
+        <div className="prose prose-neutral dark:prose-invert">
+          <p>If you need more professional info, download below!</p>
+        </div>
+      </section>
+      <Resume />
+      <div className="text-xs text-center mt-10">
+        <div>Copyright © Michael Angelo Rivera, 2023</div>
+        <div>
+          {' '}
+          Thank you{' '}
+          <Link href={'https://leerob.io/'} className="font-bold">
+            Lee Rob
+          </Link>{' '}
+          for the inspiration!
+        </div>
+      </div>
     </>
   )
 }

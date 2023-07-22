@@ -1,3 +1,4 @@
+import { FadeLeft } from 'app/components/Animations'
 import { Mdx } from 'app/components/mdx'
 import { allBlogs } from 'contentlayer/generated'
 import { getViewsForRoute } from 'lib/metrics'
@@ -82,9 +83,11 @@ export default async function Blog({ params }: { params: { slug: string } }) {
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(post.structuredData)}
       </script>
-      <h1 className="font-bold text-2xl tracking-tighter max-w-[650px]">
-        <Balancer>{post.title}</Balancer>
-      </h1>
+      <FadeLeft delay={0.3}>
+        <h1 className="font-bold text-2xl tracking-tighter max-w-[650px]">
+          <Balancer>{post.title}</Balancer>
+        </h1>
+      </FadeLeft>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">{formatDate(post.publishedAt)}</p>
         <ViewCounter count={viewsCount} route={`/blog/${post.slug}`} trackView />

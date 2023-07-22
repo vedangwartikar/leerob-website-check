@@ -1,7 +1,7 @@
 import pinoLogger, { Logger as LoggerType } from 'pino'
 const X_CORRELATION_ID = 'x-correlation-id'
 let logger: LoggerType
-export const getLogger = () => {
+const getLogger = () => {
   const deploymentEnv = process.env.DEPLOYMENT_ENV
   if (!logger) {
     logger = pinoLogger({
