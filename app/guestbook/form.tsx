@@ -1,15 +1,19 @@
 'use client'
 
 import { PopIn } from 'app/components/Animations'
+
 import { useRef, useState } from 'react'
 import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 import { saveGuestbookEntry } from '../actions'
+import { useEntries } from './submitProvider'
 
 export default function Form() {
   const formRef = useRef<HTMLFormElement>(null)
   const { pending } = useFormStatus()
 
   const [isError, setIsError] = useState(false)
+
+  const { entries, updateEntries } = useEntries()
 
   return (
     <div>
@@ -22,8 +26,11 @@ export default function Form() {
             ref={formRef}
             action={async (formData) => {
               try {
-                await saveGuestbookEntry(formData)
+                const entry = await saveGuestbookEntry(formData)
                 formRef.current?.reset()
+                if (entry) {
+                  updateEntries([entry[0], ...entries])
+                }
               } catch (e: Error | unknown) {
                 if (e instanceof Error) {
                   if (e.message.includes('value too long')) {
