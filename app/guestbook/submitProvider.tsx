@@ -1,11 +1,12 @@
 'use client'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
-type Entry = {
+export type Entry = {
   id: number
   email: string | null
   comment: string
   comment_date: Date
+  name?: string | null
 }
 
 type EntriesContextType = {

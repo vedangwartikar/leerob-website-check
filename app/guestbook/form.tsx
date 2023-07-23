@@ -19,7 +19,9 @@ export default function Form() {
     <div>
       {!isError && (
         <PopIn delay={0.2}>
-          <div className="text-xs text-slate-300 mb-2">Write something my mom would be proud of...</div>
+          <div className="text-xs text-slate-400 dark:text-slate-300 mb-2">
+            Write something my mom would be proud of...
+          </div>
           <form
             style={{ opacity: !pending ? 1 : 0.7 }}
             className="relative max-w-[500px] text-sm"
@@ -29,7 +31,7 @@ export default function Form() {
                 const entry = await saveGuestbookEntry(formData)
                 formRef.current?.reset()
                 if (entry) {
-                  updateEntries([entry[0], ...entries])
+                  updateEntries([entry, ...entries])
                 }
               } catch (e: Error | unknown) {
                 if (e instanceof Error) {

@@ -8,12 +8,30 @@ import { useEntries } from './submitProvider'
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 export const Scroller = ({ queryCallback }: { queryCallback: DBQueryType }) => {
   const { entries, updateEntries } = useEntries()
+  const entriesWithBetterNames = entries.map((entry) => {
+    let firstName = null
+    if (entry.name) {
+      const nameParts = entry.name.split(' ')
+
+      const filteredNameParts = nameParts.filter((part) => part.trim() !== '')
+      if (filteredNameParts.length > 2) {
+        firstName = filteredNameParts[0] + ' ' + filteredNameParts[1]
+      } else {
+        firstName = filteredNameParts[0]
+      }
+    }
+
+    return {
+      ...entry,
+      name: firstName || entry.email,
+    }
+  })
   return (
     <div>
       <Virtuoso
         className="scrollbar-hide"
         style={{ height: 500, overflow: 'auto' }}
-        data={entries}
+        data={entriesWithBetterNames}
         overscan={1}
         tabIndex={undefined}
         endReached={async () => {
@@ -33,7 +51,7 @@ export const Scroller = ({ queryCallback }: { queryCallback: DBQueryType }) => {
             <PopIn>
               <div key={`${entry.id}`} className="flex flex-col space-y-1 mb-4">
                 <div className="w-full text-sm break-words">
-                  <span className="text-neutral-600 dark:text-neutral-400 mr-1">{entry.email}:</span>
+                  <span className="text-neutral-600 dark:text-neutral-400 mr-1">{entry.name || entry.email}:</span>
                   {entry.comment}
                 </div>
               </div>
