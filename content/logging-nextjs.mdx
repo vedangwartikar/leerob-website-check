@@ -85,7 +85,7 @@ You can also configure at which routes to generate this header via a [Matcher](h
 
 ### My app is a container/custom server
 
-If you're using `output: 'standalone'` as your configuration, you can use the same approach as above. Nextjs [standalone](https://nextjs.org/docs/pages/api-reference/next-config-js/output#automatically-copying-traced-files) provides a basic Nodejs server. With standlone, however, 
+If you're using `output: 'standalone'` as your configuration, you can use the same approach as above. Nextjs [standalone](https://nextjs.org/docs/pages/api-reference/next-config-js/output#automatically-copying-traced-files) provides a basic Nodejs server. With standalone, however, 
 you cannot edit the server code; It's bundled with your app under `.next/standalone/server.js`.
 
 
@@ -141,7 +141,7 @@ In the Nextjs App Dir, however, things are little more... ambiguous.
 Don't take hook purely in the React sense. I mean a global hook in the *server* sense.
 
 Remember the `getLogger` function we created earlier? We can use this to get a logger anywhere in our Nextjs `app` directory (even in pages). 
-```
+```txt
 If you really want, you can even use `var` to make the logger truly global. Not sure if I recommend this, though.
 ```
 
@@ -191,7 +191,7 @@ export const getCorrelationId = (headers: Headers) => {
 
 Our logs should look something like this after `npm run dev | pino-pretty`:
 
-```
+```txt
 [20:35:38.850] INFO (16363): Saving guestbook entry
     correlationId: "18a573fa-ecad-4085-b34d-129f43cb9cc1"
     comment: "Never gonna give you up, Never gonna let you down"
