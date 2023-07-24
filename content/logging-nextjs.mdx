@@ -1,0 +1,240 @@
+---
+title: 'Better Logging with Nextjs App Directory'
+publishedAt: '2023-07-23'
+lastEditedAt: '2023-07-23'
+summary: "CorrelationId in Nextjs and strategies for better logging in Next.js apps"
+---
+
+
+Hey folks, I'd like to share my (somewhat painful) experience with adding CorrelationId to Nextjs App Directory. 
+
+I hope this helps you avoid some of the pitfalls I ran into!
+
+## Why do we need CorrelationId/Logging in Nextjs? 🤷‍♀️
+
+Unless your app is *purely* static, you likely are taking advantage of Nextjs' server-side abilities. This is especially true with the new RSC (React Server Components) model Nextjs 13.x has adopted.
+Whether your app acts as a public entry point or as a microservice, tracking the work the Nextjs server is doing is essential.
+
+
+## What is a Correlation Id 🤔?
+
+CorrelationId is a unique identifier that is used to track a request through the system. Simply put, correlationId is pretty useful for things like logging. 
+
+You can pass it between services and track the flow of the request lifecycle. If you need more on this, you can always [ask chatGPT](https://chat.openai.com/share/b31b41c5-dda3-4a37-aa17-74858c063761).
+
+CorrelationIds typically look something like this in a request header: 
+
+```json
+  {
+    "x-correlation-id": "4594ae38-5348-4714-9cb5-b74f66541acb"
+  }
+```
+
+## Ok so, how do we add CorrelationId to Nextjs?
+
+Glad you asked! Luckily (and unluckily?), there are many options.
+
+## Step 1: Pick a good logger 🪵
+
+Since my Nextjs app (this website) is deployed via Docker with [fly.io](https://fly.io) on the Nodejs runtime, I picked [pino](https://github.com/pinojs/pino). I recommend picking a Logger
+that suits your deployment environment. Platforms like Vercel's [Edge Runtime](https://vercel.com/docs/concepts/functions/edge-functions/edge-runtime) and Cloudflare's [Workers](https://workers.cloudflare.com/) wouldn't support this logger. 
+
+I added my logger as a global hook under `lib/logger.ts`. 
+
+```ts
+import pinoLogger, { Logger } from 'pino'
+
+let logger: Logger
+export const getLogger = () => {
+  if (!logger) {
+    const deploymentEnv = process.env.NODE_ENV || 'development'
+    logger = pinoLogger({
+      level: deploymentEnv === 'production' ? 'info' : 'debug',
+    })
+  }
+  return logger
+}
+```
+<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/lib/logger.ts'>view source</a>
+
+The next step is where things get a bit tricky. *How* you implement logging and correlationId depends on your deployment environment.
+
+## Step 2: Add CorrelationIds to your app 📝
+
+### My app is serverless
+
+In this case, I recommend taking advantage of Nextjs' [Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware). 
+
+Keep in mind, [Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware) doesn't support the Nodejs runtime (hopefully this changes soon). 
+
+You'll need to generate a random UUID via something compatible, like the Web Api's [crypto](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID) module. 
+
+Sudo code:
+```ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+ 
+// This function can be marked `async` if using `await` inside
+export function middleware(request: NextRequest) {
+  request.headers.set('x-correlation-id', crypto.randomUUID())
+}
+```
+
+You can also configure at which routes to generate this header via a [Matcher](https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher).
+
+
+### My app is a container/custom server
+
+If you're using `output: 'standalone'` as your configuration, you can use the same approach as above. Nextjs [standalone](https://nextjs.org/docs/pages/api-reference/next-config-js/output#automatically-copying-traced-files) provides a basic Nodejs server. With standlone, however, 
+you cannot edit the server code; It's bundled with your app under `.next/standalone/server.js`.
+
+
+My Nextjs apps are deployed as Docker containers, so my strategy was to add a custom server. 
+
+Here's some sample code:
+```ts
+const logger = getLogger()
+async function main() {
+  const nextApp = next({ dev, dir, hostname, port })
+  const handle = nextApp.getRequestHandler()
+
+  await nextApp.prepare()
+
+  const server = createServer((req, res) => {
+    req.headers[X_CORRELATION_ID] = crypto.randomUUID()
+    logger.info({
+      url: req.url,
+      method: req.method,
+      correlationId: req.headers[X_CORRELATION_ID],
+      msg: 'inbound request',
+    })
+    const parsedUrl = parse(req.url ?? '', true)
+    handle(req, res, parsedUrl)
+  })
+  ....
+  server.listen(port, hostname)
+
+  logger.info({
+    msg: 'next server ready',
+    url: `http://${hostname}:${port}`,
+  })
+}
+```
+<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/server.ts'>view source</a>
+
+As you can see, adding a correlationId to the request header is pretty straightforward. However, the benefits of a custom server include access to the Nodejs runtime and flexibility in request handling.
+
+At [Xealth](https://xealth.io/), we even use the custom server to add [OpenTelemetry](https://opentelemetry.io/docs/) for distributed tracing in Kubernetes. 
+
+This is crucial for tracking the flow of requests through our microservices.
+
+## Step 3: The Hard Part? Getting the CorrelationId and Logger 📡
+
+In the Nextjs App Dir, coupling frontend code with backend code may lead to some confusion. Typically, in the backend world, you'd have some [cls service](https://chat.openai.com/?model=text-davinci-002-render-sha) that would provide a logger and correlationId for the request lifecycle.
+
+A great example of this is [Nestjs CLS](https://www.npmjs.com/package/nestjs-cls). 
+
+In the Nextjs App Dir, however, things are little more... ambiguous.
+
+### Use a global hook
+
+Don't take hook purely in the React sense. I mean a global hook in the *server* sense.
+
+Remember the `getLogger` function we created earlier? We can use this to get a logger anywhere in our Nextjs `app` directory (even in pages). 
+```
+If you really want, you can even use `var` to make the logger truly global. Not sure if I recommend this, though.
+```
+
+Additionally, Nextjs provides an easy way to get the request headers on the server via [next/headers()](https://nextjs.org/docs/app/api-reference/functions/headers)
+
+So what does this look like in practice? On my website, I let users sign in and [leave comments](https://michaelangelo/guestbook). Let's take this simple database insert operation via a Nextjs [Server Action](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions) as an example:
+
+```ts
+import { headers as nextHeaders } from 'next/headers'
+import { getCorrelationId, getLogger } from 'lib/logger'
+'use server'
+export async function saveGuestbookEntry(formData: FormData) {
+  const correlationId = getCorrelationId(nextHeaders())
+  const logger = getLogger().child({ correlationId })
+  const comment = formData.get('entry')?.toString()
+  logger.info({ comment }, 'Saving guestbook entry')
+  const session = await getServerSession(getAuthOptions(logger))
+  const email = session?.user?.email
+  if (!email || !comment) {
+    logger.warn('Missing email or comment')
+    return
+  }
+  const entry = await db().transaction(async (trx) => {
+    ...
+  })
+}
+```
+<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/app/actions.ts'>view source</a>
+
+
+Let's break this down. `getCorrelationId` and `getLogger` are both global functions that can be used anywhere in the Nextjs app directory. 
+[pino](https://github.com/pinojs/pino) provides a `child` function that allows you to add additional context to the logger. In this case, we're adding the correlationId to the logger to persist the request lifecycle.
+
+We will cover the Auth logging in another post (coming soon 😏).
+
+`getCorrelationId` looks like this:
+```ts 
+export const getCorrelationId = (headers: Headers) => {
+  let correlationId = headers.get('x-correlation-id')
+  if (!correlationId) {
+    correlationId = crypto.randomUUID() // 👈 for dev development only
+  }
+  return correlationId
+}
+```
+<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/lib/logger.ts'>view source</a>
+
+Our logs should look something like this after `npm run dev | pino-pretty`:
+
+```
+[20:35:38.850] INFO (16363): Saving guestbook entry
+    correlationId: "18a573fa-ecad-4085-b34d-129f43cb9cc1"
+    comment: "Never gonna give you up, Never gonna let you down"
+[20:35:38.850] DEBUG (16363): adapter_getSessionAndUser
+    correlationId: "18a573fa-ecad-4085-b34d-129f43cb9cc1"
+[20:35:38.857] INFO (16363): Saved guestbook entry
+    correlationId: "18a573fa-ecad-4085-b34d-129f43cb9cc1"
+```
+
+You can of course use these functions in your `page.tsx` server components:
+```ts
+export default async function GuestbookPage() {
+  const correlationId = getCorrelationId(nextHeaders())
+  const logger = getLogger().child({ correlationId })
+  logger.info('fetching guestbook entries')
+  const [session, entries] = await Promise.all([
+    getServerSession(getAuthOptions(logger)),
+    await dbQuery({
+      limit: 20,
+    }),
+  ])
+
+  return (...)
+}
+```
+<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/app/guestbook/page.tsx'>view source</a>
+
+
+## Step 4: Profit 💰
+
+<Image
+  alt={`#1 Reddit Article`}
+  src={`https://media.michaelangrivera.com/michaelangeloio/thumbsup-meme.png`}
+  width={300}
+  height={100}
+/>
+
+Now that you have a logger and a correlationId, you can use it to track the flow of requests through your Nextjs app.
+
+This doesn't mean you get to spam stdout with logs, though. Remember to log meaningfully!
+
+In all seriousness, I hope this helps you in some shape or form. I'll be updating this page as I learn more. You can also find the source code used on my [GitHub](https://github.com/michaelangelo-io/michaelangelo.io). 
+
+<div className="text-xs text-center mt-10">
+  <div>Copyright © 2023 Michael Angelo Rivera</div>
+</div>

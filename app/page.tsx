@@ -392,7 +392,7 @@ export default async function Page() {
       </section>
       <Resume />
       <div className="text-xs text-center mt-10">
-        <div>Copyright © Michael Angelo Rivera, 2023</div>
+        <div>Copyright © 2023 Michael Angelo Rivera</div>
         <div>
           {' '}
           Thank you{' '}

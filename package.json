@@ -22,7 +22,7 @@
     "dotenv": "^16.3.1",
     "framer-motion": "^10.12.17",
     "geoip-lite": "^1.4.6",
-    "next": "13.4.10",
+    "next": "13.4.12",
     "next-auth": "^4.22.3",
     "next-contentlayer": "^0.3.3",
     "pino": "^8.14.1",

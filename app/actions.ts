@@ -28,10 +28,10 @@ export async function increment(route: string) {
 export async function saveGuestbookEntry(formData: FormData) {
   const correlationId = getCorrelationId(nextHeaders())
   const logger = getLogger().child({ correlationId })
-  logger.info('Saving guestbook entry')
+  const comment = formData.get('entry')?.toString()
+  logger.info({ comment }, 'Saving guestbook entry')
   const session = await getServerSession(getAuthOptions(logger))
   const email = session?.user?.email
-  const comment = formData.get('entry')?.toString()
   if (!email || !comment) {
     logger.warn('Missing email or comment')
     return
