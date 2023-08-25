@@ -10,7 +10,7 @@ function ChevronRightIcon(props: any) {
 }
 
 export function Card({ as: Component = 'div', className, children }: any) {
-  return <Component className={clsx(className, 'group relative flex flex-col ')}>{children}</Component>
+  return <Component className={clsx(className, 'group relative flex flex-col  mb-5')}>{children}</Component>
 }
 
 Card.Link = function CardLink({ children, ...props }: any) {

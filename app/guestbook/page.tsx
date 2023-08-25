@@ -31,7 +31,7 @@ export default async function GuestbookPage() {
     <section>
       <EntriesProvider initialEntries={entries}>
         <FadeLeft delay={0.3}>
-          <h1 className="font-bold text-2xl mb-4 tracking-tighter">say hi</h1>
+          <h1 className="font-bold text-2xl mb-4 -mt-5 tracking-tighter">say hi</h1>
         </FadeLeft>
         {session?.user ? (
           <>

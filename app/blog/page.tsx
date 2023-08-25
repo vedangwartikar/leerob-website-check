@@ -15,7 +15,7 @@ export default async function BlogPage() {
   return (
     <section>
       <FadeLeft delay={0.2}>
-        <h1 className="font-bold text-2xl mb-8 tracking-tighter">thoughts, lessons, and rants</h1>
+        <h1 className="font-bold text-2xl mb-8 -mt-5 tracking-tighter">thoughts, lessons, and rants</h1>
       </FadeLeft>
       {allBlogsSorted().map((post, i) => (
         <Article

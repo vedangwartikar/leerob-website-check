@@ -140,6 +140,25 @@ export const guestbook_entries = schema.table(
   },
 )
 
+export const blog_comments = schema.table(
+  'blog_comments',
+  {
+    id: bigserial('id', { mode: 'number' }).notNull().primaryKey(),
+    email: text('email'),
+    comment: varchar('comment', {
+      length: 2000,
+    }).notNull(),
+    comment_date: timestamp('comment_date', { mode: 'date' }).notNull().defaultNow(),
+  },
+  (route) => {
+    return {
+      id_idx: index('id_idx').on(route.id),
+      email_idx: index('email_idx').on(route.email),
+      comment_date_idx: index('comment_date_idx').on(route.comment_date).desc(),
+    }
+  },
+)
+
 export const tbs = {
   auth_users,
   accounts,
