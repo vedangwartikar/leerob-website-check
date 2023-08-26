@@ -154,6 +154,8 @@ The app flow, however, would look something like this:
 
 The flash happens because the *default* (light mode) CSS is rendered on the server, and the user's preference is stored on the client. That preference is applied once the client renders the component.
 
+This "flash" is often referred to as the [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content) (Flash of Unstyled Content).
+
 In Nextjs 12, users had to resort to (disputable) hacks like [this](https://stackoverflow.com/questions/71277655/prevent-page-flash-in-next-js-12-with-tailwind-css-class-based-dark-mode). 
 
 Popular packages like [`next-themes`](https://www.npmjs.com/package/next-themes) also [haven't been updated](https://github.com/pacocoursey/next-themes/issues/152) to support Next 13 (as of writing this article). 
@@ -298,6 +300,73 @@ export default Header
 
 And that's it! You should now have a working dark mode toggle that persists on refresh. 
 It'll even persist if the user closes the browser and opens it again.
+
+## Important Nextjs Caveat❗
+
+According to the Nextjs docs,
+
+> Good to know: `cookies()` is a Dynamic Function whose returned values 
+cannot be known ahead of time. Using it in a layout or page will 
+opt a route into dynamic rendering at request time. ([source](https://nextjs.org/docs/app/api-reference/functions/cookies))
+
+This caveat means that putting `cookies()` in the `Layout.tsx` component will disable static rendering for the **entire** app.
+
+You may not want to do this if you have a large app with many static pages.
+
+### Workarounds
+
+You can get around this by creating a RSC component hook that can be used on demand. 
+
+Imagine you have the following file structure:
+```yaml
+- app
+  - layout.tsx # 👈 don't put cookies here
+  - some-static-page/
+    - page.tsx
+  - some-dynamic-page/ 
+    - page.tsx 
+    - layout.tsx # 👈 put cookies here
+```
+
+You can create a layout hook that can be used in the `page.tsx` component like this:
+
+```tsx
+//RSCThemeProvider.tsx
+import clsx from 'clsx'
+import { cookies } from 'next/headers'
+import SomeHeader from './components/Header'
+import './globals.css'
+export const metadata = {
+  title: 'Some App',
+  description: 'Never gonna give you up, never gonna let you down',
+}
+export default function RSCThemeProvider({ children }: { children: React.ReactNode }) {
+  const prefersDark = cookies().get('x-theme')?.value === 'dark'
+  return (
+    <div className={clsx("your main classes here", prefersDark ? 'dark' : undefined)}>
+      {children}
+    </div>
+  )
+}
+```
+
+You can then utilize [Nesting Layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#nesting-layouts) by placing this hook in the `page.tsx` file:
+
+```tsx
+import RSCThemeProvider from '../components/RSCThemeProvider'
+ 
+export default function SomeNestedLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (<RSCThemeProvider>{children}</RSCThemeProvider>)
+}
+```
+
+This approach will allow you to use the `cookies()` function a `Layout.tsx` page without disabling static rendering for the entire app.
+
+For Dark Mode on static pages, you can try employing [Tailwind's official recommendation](https://tailwindcss.com/docs/dark-mode#supporting-system-preference-and-manual-selection) and combine that with Next's [`beforeInteractive` strategy](https://nextjs.org/docs/pages/api-reference/components/script#beforeinteractive).
 
 ## Additional Resources
 
