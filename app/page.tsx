@@ -283,9 +283,9 @@ export default async function Page() {
             aria-label="Follow on Instagram"
             icon={InstagramIcon}
           />
-          <SocialLink href="https://github.com/michaelangelo-io" aria-label="Follow on GitHub" icon={GitHubIcon} />
+          <SocialLink href="https://github.com/michaelangeloio" aria-label="Follow on GitHub" icon={GitHubIcon} />
           <SocialLink
-            href="https://www.linkedin.com/in/michaelangelo-io/"
+            href="https://www.linkedin.com/in/michaelangeloio/"
             aria-label="Follow on LinkedIn"
             icon={LinkedInIcon}
           />
@@ -336,7 +336,7 @@ export default async function Page() {
               className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
               rel="noopener noreferrer"
               target="_blank"
-              href="https://michaelangelo-io.medium.com/"
+              href="https://michaelangeloio.medium.com/"
             >
               <ArrowIcon />
               <p className="h-7 ml-2">my medium</p>

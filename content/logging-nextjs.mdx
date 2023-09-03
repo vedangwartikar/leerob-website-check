@@ -55,7 +55,7 @@ export const getLogger = () => {
   return logger
 }
 ```
-<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/lib/logger.ts'>view source</a>
+<a className='text-xs' target="_blank" href='https://github.com/michaelangeloio/michaelangelo.io/blob/main/lib/logger.ts'>view source</a>
 
 The next step is where things get a bit tricky. *How* you implement logging and correlationId depends on your deployment environment.
 
@@ -120,7 +120,7 @@ async function main() {
   })
 }
 ```
-<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/server.ts'>view source</a>
+<a className='text-xs' target="_blank" href='https://github.com/michaelangeloio/michaelangelo.io/blob/main/server.ts'>view source</a>
 
 As you can see, adding a correlationId to the request header is pretty straightforward. However, the benefits of a custom server include access to the Nodejs runtime and flexibility in request handling.
 
@@ -169,7 +169,7 @@ export async function saveGuestbookEntry(formData: FormData) {
   })
 }
 ```
-<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/app/actions.ts'>view source</a>
+<a className='text-xs' target="_blank" href='https://github.com/michaelangeloio/michaelangelo.io/blob/main/app/actions.ts'>view source</a>
 
 
 Let's break this down. `getCorrelationId` and `getLogger` are both global functions that can be used anywhere in the Nextjs app directory. 
@@ -187,7 +187,7 @@ export const getCorrelationId = (headers: Headers) => {
   return correlationId
 }
 ```
-<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/lib/logger.ts'>view source</a>
+<a className='text-xs' target="_blank" href='https://github.com/michaelangeloio/michaelangelo.io/blob/main/lib/logger.ts'>view source</a>
 
 Our logs should look something like this after `npm run dev | pino-pretty`:
 
@@ -217,7 +217,7 @@ export default async function GuestbookPage() {
   return (...)
 }
 ```
-<a className='text-xs' target="_blank" href='https://github.com/michaelangelo-io/michaelangelo.io/blob/main/app/guestbook/page.tsx'>view source</a>
+<a className='text-xs' target="_blank" href='https://github.com/michaelangeloio/michaelangelo.io/blob/main/app/guestbook/page.tsx'>view source</a>
 
 
 ## Step 4: Profit 💰
@@ -233,7 +233,7 @@ Now that you have a logger and a correlationId, you can use it to track the flow
 
 This doesn't mean you get to spam stdout with logs, though. Remember to log meaningfully!
 
-In all seriousness, I hope this helps you in some shape or form. I'll be updating this page as I learn more. You can also find the source code used on my [GitHub](https://github.com/michaelangelo-io/michaelangelo.io). 
+In all seriousness, I hope this helps you in some shape or form. I'll be updating this page as I learn more. You can also find the source code used on my [GitHub](https://github.com/michaelangeloio/michaelangelo.io). 
 
 <div className="text-xs text-center mt-10">
   <div>Copyright © 2023 Michael Angelo Rivera</div>

@@ -49,6 +49,7 @@ export function Photos() {
           <Carousel
             images={[
               <Image
+                placeholder="blur"
                 key={'hawaiii2'}
                 alt="somehwere in hawaii"
                 src={hawaiii2}
@@ -58,6 +59,7 @@ export function Photos() {
                 className="rounded-lg object-cover object-[-16px] sm:object-center"
               />,
               <Image
+                placeholder="blur"
                 key={'seattle'}
                 alt="some brewery in seattle"
                 src={seattle}
@@ -75,6 +77,7 @@ export function Photos() {
           <Carousel
             images={[
               <Image
+                placeholder="blur"
                 key={'colorado'}
                 alt="Me in some colorado mountains during the summer"
                 src={colorado}
@@ -84,6 +87,7 @@ export function Photos() {
                 className="rounded-lg object-cover object-top sm:object-center"
               />,
               <Image
+                placeholder="blur"
                 key={'closeup'}
                 alt="somewhere in utah skiing"
                 src={closeup}
@@ -101,6 +105,7 @@ export function Photos() {
           <Carousel
             images={[
               <Image
+                placeholder="blur"
                 key={'brighton'}
                 alt="friend and I at Brighton, UT"
                 src={brighton}
@@ -110,6 +115,7 @@ export function Photos() {
                 className="rounded-lg object-cover"
               />,
               <Image
+                placeholder="blur"
                 key={'girlfriend'}
                 alt="my girlfriend and I "
                 src={girlfrield}
@@ -127,6 +133,7 @@ export function Photos() {
           <Carousel
             images={[
               <Image
+                placeholder="blur"
                 key={'malibu'}
                 alt="cycling in Malibu, CA"
                 src={malibu}
@@ -136,6 +143,7 @@ export function Photos() {
                 className="rounded-lg object-cover"
               />,
               <Image
+                placeholder="blur"
                 key={'doggos'}
                 alt="my dogs!"
                 src={doggos}
@@ -153,6 +161,7 @@ export function Photos() {
           <Carousel
             images={[
               <Image
+                placeholder="blur"
                 key={'honolulu'}
                 alt="friends and I completing the honolulu marathon"
                 src={honolulu}
@@ -162,6 +171,7 @@ export function Photos() {
                 className="rounded-lg object-cover"
               />,
               <Image
+                placeholder="blur"
                 key={'leadville'}
                 alt="me at the leadville marathon"
                 src={leadville}
