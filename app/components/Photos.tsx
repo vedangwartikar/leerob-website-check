@@ -92,16 +92,15 @@ export function Photos() {
                 alt="friend and I at Brighton, UT"
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/brighton.jpg'}
                 sizes="(max-width: 768px) 213px, 33vw"
-                className="rounded-lg   object-scale-down mt-1"
+                className="rounded-3xl object-scale-down h-[160px]"
               />,
               <img
-                className="w-full h-[200px] rounded-full  object-scale-down "
+                className="w-full h-[170px] rounded-3xl  object-scale-down "
                 placeholder="blur"
                 key={'girlfriend'}
                 alt="my girlfriend and I "
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/girlfriend.jpg'}
                 sizes="(max-width: 768px) 213px, 33vw"
-                height={50}
               />,
             ]}
           />
