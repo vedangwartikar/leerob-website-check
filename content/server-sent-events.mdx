@@ -1,0 +1,44 @@
+---
+title: 'Type Safe Server Sent Events'
+publishedAt: '2023-10-02'
+lastEditedAt: '2023-10-02'
+summary: "How to add SSE to your Web API compatible Node/Bun servers (like Nextjs)"
+---
+
+This article is about how to add [Server Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) to your app
+so that you can leverage "real-time" updates via the standard [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) API.
+
+### Option 1: You can check out my new lib called `ts-see`
+
+If you're looking to quickly add [Server Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) to your app
+so that you can leverage real-time updates, I've created a little package called [`ts-sse`](https://github.com/michaelangeloio/ts-sse). 
+For in-depth details on how to use it, please see the [README](https://github.com/michaelangeloio/ts-sse/blob/main/README.md).
+
+Installing the package isn't necessary; You can copy the code from the [source](https://github.com/michaelangeloio/ts-sse/blob/main/src/writer.ts)! 
+
+### Option 2: You can build it yourself!
+
+> Note: This article is based on using [Nextjs](https://nextjs.org/), but you can use this approach with any Node/Bun/Edge compatible server.
+
+#### Step 1: Determine your runtime environment 🤔
+
+Code is hard, but choosing the right Javascript implementation is harder. Knowing your runtime environment is arguably the most critical step! Why? Just take a look below 😅
+
+<Image
+  alt={`#1 Reddit Article`}
+  src={`https://media.michaelangrivera.com/michaelangeloio/content/sse-decision-tree.png`}
+  width={350}
+  height={500}
+/>
+
+
+Let's assume you're using Node and Nextjs, for instance. The new Nextjs App Dir utilizes the standard Web APIs [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) and [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response).
+Because these APIs aren't the classic Node [Request/Response](https://nodejs.org/api/http.html#httprequestoptions-callback) APIs, the implementation of Server-Sent Events
+is entirely different.
+
+##### To sum up:
+
+- If your route handler accepts the Web API Standard [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) and [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response), you'll likely want to use the Nodejs [Web Streams API](https://nodejs.org/api/webstreams.html) (now available in `nodejs>=18`). Think Nextjs, Bun. 
+
+- If your route handler accepts the classic Node Node [Request/Response](https://nodejs.org/api/http.html#httprequestoptions-callback) APIs, I recommend tailoring your code similar to [`node-ssestream`](https://github.com/EventSource/node-ssestream/tree/master). [Nestjs's implementation](https://docs.nestjs.com/techniques/server-sent-events) also uses this approach. Think classic Express, Fastify, etc.
+
