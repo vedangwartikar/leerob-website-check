@@ -25,7 +25,7 @@
     "framer-motion": "^10.12.17",
     "geoip-lite": "^1.4.6",
     "js-cookie": "^3.0.5",
-    "next": "13.5.3",
+    "next": "13.5.4",
     "next-auth": "^4.23.0",
     "next-contentlayer": "^0.3.4",
     "pino": "^8.15.3",
