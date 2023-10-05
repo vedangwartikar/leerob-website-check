@@ -17,6 +17,13 @@ pnpm install
 pnpm dev
 ```
 
+
+Deploying to Fly.io
+
+```bash
+pnpm site:deploy
+```
+
 ## Cloning / Forking
 
 Please review the [license](https://github.com/leerob/michaelangelo.io/blob/main/LICENSE.txt) and remove all of my personal information (resume, blog posts, images, etc.).
