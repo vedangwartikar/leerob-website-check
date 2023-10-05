@@ -1,0 +1,31 @@
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+
+  <script src="//unpkg.com/globe.gl"></script>
+  <!--<script src="../../dist/globe.gl.js"></script>-->
+</head>
+
+<body>
+  <div id="globeViz"></div>
+
+  <script>
+    const data = JSON.parse('REPLACE_ME_WITH_DATA')
+
+    Globe()
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+      .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+      .labelsData(data)
+      .labelLat(d => d.lat)
+      .labelLng(d => d.lng)
+      .labelText(d => d.geo_ip_city)
+      .labelSize(d => Math.sqrt(.4))
+      // .labelDotRadius(d => Math.sqrt(d.size) * 4e-4)
+      .labelColor(() => 'rgba(255, 165, 0, 0.75)')
+      .labelResolution(2)
+      (document.getElementById('globeViz'))
+  </script>
+</body>

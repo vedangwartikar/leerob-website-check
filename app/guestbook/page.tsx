@@ -6,6 +6,8 @@ import { getCorrelationId, getLogger } from 'lib/logger'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { headers as nextHeaders } from 'next/headers'
+import { GuestbookNav } from './GuestBookNav'
+import StatsPage from './Stats'
 import { SignIn, SignOut } from './buttons'
 import Form from './form'
 import { EntriesProvider } from './submitProvider'
@@ -17,7 +19,13 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic'
 
-export default async function GuestbookPage() {
+export default async function GuestbookPage({
+  searchParams,
+}: {
+  searchParams: {
+    stats?: string
+  }
+}) {
   const correlationId = getCorrelationId(nextHeaders())
   const logger = getLogger().child({ correlationId })
   const [session, entries] = await Promise.all([
@@ -27,11 +35,21 @@ export default async function GuestbookPage() {
     }),
   ])
 
+  if (searchParams.stats) {
+    return (
+      <section>
+        <GuestbookNav searchParams={searchParams} />
+        <StatsPage />
+      </section>
+    )
+  }
+
   return (
     <section>
+      <GuestbookNav searchParams={searchParams} />
       <EntriesProvider initialEntries={entries}>
         <FadeLeft delay={0.3}>
-          <h1 className="font-bold text-2xl mb-4 -mt-5 tracking-tighter">say hi</h1>
+          <h1 className="font-bold text-2xl mb-5 -mt-5 tracking-tighter">say hi</h1>
         </FadeLeft>
         {session?.user ? (
           <>
