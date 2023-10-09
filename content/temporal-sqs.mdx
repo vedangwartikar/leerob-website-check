@@ -14,7 +14,7 @@ Why might we want to integrate Temporal and SQS? Especially given the overlap in
 Here's a few reasons: 
 1. **Ordered Processing** : If the order of processing tasks is crucial, FIFO queues ensure that messages are processed in the order they are sent. This can be especially important in financial transactions, data synchronization, and other use cases where order matters. 
 > In my application, [ActivityStreak](https://activitystreak.app), I use SQS FIFO queues to ensure that the order of processing is maintained. For example, when a user completes an activity, a message is sent to the SQS queue. The message is then processed by some code that updates the user's activity streak. If the order of processing is not maintained, the user's streak could be incorrect.
-2. **Exactly-Once Processing** : FIFO queues provide exactly-once processing, which means that even if a consumer retrieves a message more than once, the message is processed only once.
+2. **Decoupling of Services**: In environments where two services cannot communicate over the same local network due to being in different clusters or policy constraints, a queue acts as a mediator. AWS SQS can store messages until they're consumed, ensuring that messages aren't lost even if the consuming service isn't immediately available.
 3. **Integration with Existing Architecture**: In this day and age, everything quickly becomes "legacy". For organizations that have already invested in AWS and use SQS queues, integrating Temporal can enhance the processing capabilities without a complete overhaul. Temporal can be introduced to handle the business logic, retries, and workflows, while SQS continues to act as the message broker.
 
 
