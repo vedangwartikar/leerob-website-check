@@ -29,7 +29,7 @@ export function Article({
         <div className="flex justify-between ">
           <div className="max-w-[250px] sm:max-w-md lg:max-w-lg">{article.description}</div>
           <div className="text-right flex-row">
-            {`${article.views}`} {'Views'}
+            {`${Number(article.views).toLocaleString('en-US')}`} {'Views'}
           </div>
         </div>
       </Card.Description>

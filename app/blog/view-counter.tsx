@@ -20,5 +20,5 @@ export default function ViewCounter({
     }
   }, [])
 
-  return <p className="text-neutral-600 dark:text-neutral-400">{`${count.toLocaleString()} views`}</p>
+  return <p className="text-neutral-600 dark:text-neutral-400">{`${Number(count).toLocaleString('en-US')} views`}</p>
 }
