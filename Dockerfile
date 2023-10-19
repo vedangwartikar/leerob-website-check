@@ -40,7 +40,7 @@ COPY ./dist/server/server.js next.config.js ./
 COPY .next ./.next
 
 # Run the application under "node" user by default
-RUN chown -R node:node .
+RUN chown -R node:node .next
 USER node
 EXPOSE 3000
 # CMD ["ls", "-la"]
