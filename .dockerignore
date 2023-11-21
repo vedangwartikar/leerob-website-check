@@ -42,3 +42,7 @@ build
 !node_modules/.pnpm/tailwindcss@3.3.2/node_modules/tailwindcss/stubs/**/*
 fly.toml
 .next/cache
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

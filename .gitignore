@@ -45,3 +45,7 @@ tsconfig.server.tsbuildinfo
 
 *.key
 dist
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
