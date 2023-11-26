@@ -3,7 +3,7 @@ const { withContentlayer } = require('next-contentlayer')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverActions: true,
+    ppr: true
   },
   webpack: (config) => {
     config.module.rules.push({

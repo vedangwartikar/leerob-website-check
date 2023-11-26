@@ -4,6 +4,7 @@ import { allBlogs } from 'contentlayer/generated'
 import { getViewsForRoute } from 'lib/metrics'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 import Balancer from 'react-wrap-balancer'
 import ViewCounter from '../view-counter'
 
@@ -76,7 +77,10 @@ export default async function Blog({ params }: { params: { slug: string } }) {
     notFound()
   }
 
-  const viewsCount = await getViewsForRoute(`/blog/${post.slug}`)
+  const ViewComponent = async () => {
+    const viewsCount = await getViewsForRoute(`/blog/${post.slug}`)
+    return <ViewCounter count={viewsCount} route={`/blog/${post.slug}`} trackView />
+  }
 
   return (
     <section>
@@ -90,7 +94,9 @@ export default async function Blog({ params }: { params: { slug: string } }) {
       </FadeLeft>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">{formatDate(post.publishedAt)}</p>
-        <ViewCounter count={viewsCount} route={`/blog/${post.slug}`} trackView />
+        <Suspense fallback={<div />}>
+          <ViewComponent />
+        </Suspense>
       </div>
       <Mdx code={post.body.code} />
     </section>

@@ -3,7 +3,7 @@
 import { PopIn } from 'app/components/Animations'
 
 import { useRef, useState } from 'react'
-import { experimental_useFormStatus as useFormStatus } from 'react-dom'
+import { useFormStatus } from 'react-dom'
 import { saveGuestbookEntry } from '../actions'
 import { useEntries } from './submitProvider'
 

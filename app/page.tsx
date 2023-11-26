@@ -59,7 +59,10 @@ async function BlogLink({
 }
 
 export default async function Page() {
-  const viewsForRootPage = await getViewsForRoute('/')
+  const RootPageViews = async () => {
+    const viewsForRootPage = await getViewsForRoute('/')
+    return <ViewCounter count={viewsForRootPage} route={'/'} trackView />
+  }
   return (
     <>
       <section>
@@ -73,7 +76,9 @@ export default async function Page() {
           <FadeIn delay={1}>
             <p className="font-bold text-xl tracking-tighter">yes, like the ninja turtle</p>
           </FadeIn>
-          <ViewCounter count={viewsForRootPage} route={'/'} trackView />
+          <Suspense fallback={<div />}>
+            <RootPageViews />
+          </Suspense>
         </div>
         <FadeUp>
           <p className="prose prose-neutral dark:prose-invert">

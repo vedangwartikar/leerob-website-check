@@ -1,4 +1,4 @@
-ARG NODE_BASE=node:20.5.1-alpine
+ARG NODE_BASE=node:21.2.0-alpine
 # Stage: code
 FROM ${NODE_BASE} AS code
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
