@@ -49,3 +49,5 @@ dist
 .flaskenv*
 !.env.project
 !.env.vault
+
+__pycache__
