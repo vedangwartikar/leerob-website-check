@@ -38,7 +38,6 @@ export function Photos() {
           <Carousel
             images={[
               <img
-                placeholder="blur"
                 key={'hawaiii2'}
                 alt="somehwere in hawaii"
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/hawaiii2.jpg'}
@@ -87,7 +86,6 @@ export function Photos() {
           <Carousel
             images={[
               <img
-                placeholder="blur"
                 key={'brighton'}
                 alt="friend and I at Brighton, UT"
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/brighton.jpg'}
@@ -96,7 +94,6 @@ export function Photos() {
               />,
               <img
                 className="w-full h-[170px] rounded-3xl  object-scale-down "
-                placeholder="blur"
                 key={'girlfriend'}
                 alt="my girlfriend and I "
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/girlfriend.jpg'}
@@ -111,7 +108,6 @@ export function Photos() {
           <Carousel
             images={[
               <img
-                placeholder="blur"
                 key={'malibu'}
                 alt="cycling in Malibu, CA"
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/malibu.jpg'}
@@ -119,7 +115,6 @@ export function Photos() {
                 className="rounded-lg object-cover"
               />,
               <img
-                placeholder="blur"
                 key={'doggos'}
                 alt="my dogs!"
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/doggos.jpg'}
@@ -135,7 +130,6 @@ export function Photos() {
           <Carousel
             images={[
               <img
-                placeholder="blur"
                 key={'honolulu'}
                 alt="friends and I completing the honolulu marathon"
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/honolulu.jpg'}
@@ -143,7 +137,6 @@ export function Photos() {
                 className="rounded-lg object-cover"
               />,
               <img
-                placeholder="blur"
                 key={'leadville'}
                 alt="me at the leadville marathon"
                 src={'https://media.michaelangrivera.com/michaelangeloio/main-page/leadville.jpg'}

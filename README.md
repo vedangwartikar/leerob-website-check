@@ -21,7 +21,7 @@ pnpm dev
 Deploying to Fly.io
 
 ```bash
-pnpm site:deploy
+pnpm deploy:site
 ```
 
 ## Cloning / Forking
