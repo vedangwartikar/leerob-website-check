@@ -15,6 +15,9 @@ const navItems = {
   '/guestbook': {
     name: 'guestbook',
   },
+  '/open-source': {
+    name: 'open source',
+  },
 }
 
 export default function Navbar({ theme }: { theme: string }) {
@@ -30,8 +33,11 @@ export default function Navbar({ theme }: { theme: string }) {
       <aside className="-ml-[8px] mb-16 tracking-tight">
         <div className="lg:sticky lg:top-20">
           <LayoutGroup>
-            <nav className="flex justify-end relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative" id="nav">
-              <div className="flex flex-row space-x-0 pr-10">
+            <nav
+              className="flex justify-end relative px-0 pb-0 fade md:overflow-auto scrollbar-hide scroll-pr-6 md:relative"
+              id="nav"
+            >
+              <div className="flex space-x-0 pr-10">
                 {Object.entries(navItems).map(([path, { name }]) => {
                   const isActive = path === pathname
                   return (
@@ -39,7 +45,7 @@ export default function Navbar({ theme }: { theme: string }) {
                       key={path}
                       href={path}
                       className={clsx(
-                        'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
+                        'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle md:whitespace-nowrap',
                         {
                           'text-neutral-500': !isActive,
                         },

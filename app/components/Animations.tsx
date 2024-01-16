@@ -27,7 +27,7 @@ export function HoverPop(props: { children: React.ReactNode; scale?: number }) {
   return (
     <motion.div
       whileHover={{
-        scale: 1.01,
+        scale: props.scale ?? 1.01,
         transition: { duration: 0.2 },
       }}
     >

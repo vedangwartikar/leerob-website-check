@@ -1,25 +1,15 @@
 import { getViewsForRoute } from 'lib/metrics'
 import { allBlogsSorted } from 'lib/utils'
 import Link from 'next/link'
-import ActivityStreakLogo from 'public/images/main-page/activitystreaklogo.svg'
-import { PropsWithChildren, Suspense } from 'react'
+import { Suspense } from 'react'
 import ViewCounter from './blog/view-counter'
 import { FadeIn, FadeUp, PopIn } from './components/Animations'
 import { Article } from './components/Article'
 import { Header } from './components/Avatar'
+import { Badge } from './components/Badge'
 import { Photos } from './components/Photos'
 import { Resume } from './components/Resume'
 import { GitHubIcon, InstagramIcon, LinkedInIcon, SocialLink, TwitterIcon } from './components/Social'
-
-function Badge(props: PropsWithChildren & { href: string }) {
-  return (
-    <a
-      {...props}
-      target="_blank"
-      className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded p-1 text-sm inline-flex items-center leading-4 text-neutral-900 dark:text-neutral-100 no-underline"
-    />
-  )
-}
 
 function ArrowIcon() {
   return (
@@ -278,7 +268,11 @@ export default async function Page() {
               {' '}
               my blog
             </Link>{' '}
-            or learn more about me below!
+            and{' '}
+            <Link className="font-bold" href="/open-source">
+              projects
+            </Link>{' '}
+            to see what I&apos;ve been up to.
           </p>
         </FadeUp>
         <div className="mt-6 flex gap-6">
@@ -304,10 +298,11 @@ export default async function Page() {
         </div>
         <div className="prose prose-neutral dark:prose-invert">
           <p>
-            I&apos;d like to use this site to share my experiences, dumb mistakes, learnings, and maybe some memes. I
-            hope you enjoy!
+            I use this site to share my experiences, dumb mistakes, learnings, and maybe some memes. I hope you enjoy!
           </p>
         </div>
+        <div className="my-5 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50 w-3/4" />
+        <h3>Recent Articles</h3>
         <div className="my-8 flex flex-col space-y-4 w-full">
           <Suspense>
             {allBlogsSorted()
@@ -325,6 +320,16 @@ export default async function Page() {
           </Suspense>
         </div>
         <ul className="flex flex-col md:flex-row mt-8 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-600 dark:text-neutral-300">
+          <li>
+            <a
+              className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
+              rel="noopener noreferrer"
+              href="/open-source"
+            >
+              <ArrowIcon />
+              <p className="h-7 ml-2">my projects</p>
+            </a>
+          </li>
           <li>
             <a
               className="flex items-center hover:text-neutral-800 dark:hover:text-neutral-100 transition-all"
@@ -348,49 +353,8 @@ export default async function Page() {
             </a>
           </li>
         </ul>
-        <div className="my-5 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50" />
-        <div className="prose prose-neutral dark:prose-invert">
-          <p>I also have some of my own projects I&apos;m working on. Check &apos;em out if you want.</p>
-        </div>
-        <div className="my-8 flex flex-col  w-full  md:flex-row items-center space-y-1 space-x-1">
-          <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
-            <Link href={'https://activitystreak.app'}>
-              {' '}
-              <ActivityStreakLogo className="w-15 h-10" alt="Site Title" />
-            </Link>
-          </div>
+        <div className="my-5 h-0.5 border-t-0 bg-neutral-100 opacity-100 dark:opacity-50 w-3/4" />
 
-          <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center px-3 py-4">
-            <svg width="50" height="40" viewBox="0 0 116 115" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clipPath="url(#clip0_13_20)">
-                <rect width="116" height="116" rx="26" fill="#9333EA" />
-                <path
-                  d="M62.487 59.9566L95.1166 60.1262L95.1493 53.8212L62.5198 53.6517L62.487 59.9566ZM62.5863 40.8469L95.2159 41.0164L95.2493 34.5815L62.6197 34.412L62.5863 40.8469ZM62.4168 73.4765L95.0463 73.646L95.0129 80.0809L62.3833 79.9114L62.4168 73.4765Z"
-                  fill="white"
-                />
-                <path
-                  d="M46.06 64.92C52.3 62.58 55.875 57.51 55.875 50.555C55.875 40.545 48.595 34.5 36.7 34.5H18.5V40.935H36.44C44.305 40.935 48.4 44.445 48.4 50.555C48.4 56.6 44.305 60.175 36.44 60.175H18.5V80H25.91V66.48H36.7C37.48 66.48 38.325 66.48 39.04 66.415L48.595 80H56.655L46.06 64.92Z"
-                  fill="white"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_13_20">
-                  <rect width="116" height="115" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-            <Link href={'https://ts-rest.com/'} className="font-bold text-sm">
-              {' '}
-              Ts-Rest Core Team
-            </Link>
-          </div>
-          <div className="border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded flex items-center justify-between px-3 py-4">
-            <Link href={'https://github.com/Xealth/cherry-pick-action'} className="font-bold text-sm">
-              {' '}
-              🍒 Cherry Pick GHA Action{' '}
-            </Link>
-          </div>
-        </div>
         <div className="prose prose-neutral dark:prose-invert">
           <p>If you need more professional info, download below!</p>
         </div>
